@@ -14,7 +14,7 @@
     </resultMap>
     
     <insert id="insertTeacher" parameterType="teacher">
-        insert into teacher(teacher_name, sex, subject, information, user_id)
+        insert into teacher (teacher_name, sex, subject, information, user_id)
         values (#{teacherName}, #{sex}, #{subject}, #{information}, #{userId})
     </insert>
 

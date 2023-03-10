@@ -7,5 +7,8 @@ public interface StudentService {
 
     /*返回userId*/
     public Integer addStudent(User user, Student student);
+    public Integer deleteStudentByStudentNum(Integer studentNum);
+    public Integer updateStudent(Student student);
+    public Student queryStudentByStudentNum(Integer studentNum);
 
 }

@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface StudentMapper {
 
     public Integer insertStudent(Student student);
-    public Student queryStudentById(Integer id);
+    public Student queryStudentByStudentNum(Integer studentNum);
     public Integer updateStudent(Student student);
-    public Integer deleteStudentById(Integer id);
+    public Integer deleteStudentByStudentNum(Integer studentNum);
 }

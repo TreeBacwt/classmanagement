@@ -34,4 +34,10 @@
         where id = #{id}
     </delete>
 
+    <select id="queryUserByAccount" parameterType="string" resultMap="userMap">
+        select *
+        from user
+        where account = #{account}
+    </select>
+
 </mapper>

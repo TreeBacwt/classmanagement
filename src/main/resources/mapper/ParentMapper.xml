@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.classmanagement.dao.ParentMapper">
+
+    <resultMap id="parentMap" type="parent">
+        <id column="id" property="id"/>
+        <result column="parent_name" property="parentName"/>
+        <result column="student_num" property="studentNum"/>
+        <result column="user_id" property="userId"/>
+        <result column="information" property="information"/>
+    </resultMap>
+
+    <insert id="insertParent" parameterType="parent">
+        insert into parent (parent_name, student_num, user_id, information)
+        values (#{parentName}, #{studentNum}, #{userId}, #{information})
+    </insert>
+
+    <select id="queryParentById" parameterType="int" resultMap="parentMap">
+        select *
+        from parent
+        where id = #{id}
+    </select>
+
+    <update id="updateParent" parameterType="parent">
+        update parent
+        set
+           parent_name = #{parentName},
+           student_num = #{studentNum},
+           information = #{information}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteParentById" parameterType="int">
+        delete
+        from parent
+        where id = #{id}
+    </delete>
+
+</mapper>

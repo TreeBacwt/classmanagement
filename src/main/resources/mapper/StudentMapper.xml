@@ -17,11 +17,11 @@
     </resultMap>
 
     <insert id="insertStudent" parameterType="student">
-        insert into student(student_name, sex, user_id, birthday, address, ethnic, information, is_leader)
+        insert into student (student_name, sex, user_id, birthday, address, ethnic, information, is_leader)
         values (#{studentName}, #{sex}, #{userId}, #{birthday}, #{address}, #{ethnic}, #{information}, #{isLeader})
     </insert>
 
-    <select id="queryStudentById" resultMap="studentMap" parameterType="int">
+    <select id="queryStudentByStudentNum" resultMap="studentMap" parameterType="int">
         select *
         from student
         where student_num = #{studentNum}
@@ -40,7 +40,7 @@
         where student_num = #{studentNum}
     </update>
 
-    <delete id="deleteStudentById" parameterType="int">
+    <delete id="deleteStudentByStudentNum" parameterType="int">
         delete
         from student
         where student_num = #{studentNum}

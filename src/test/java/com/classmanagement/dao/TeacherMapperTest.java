@@ -19,7 +19,7 @@ public class TeacherMapperTest {
 
     @Test
     void query(){
-        System.out.println(teacherMapper.queryTeacherById(1));
+        System.out.println(teacherMapper.queryTeacherById(5));
     }
 
     @Test
