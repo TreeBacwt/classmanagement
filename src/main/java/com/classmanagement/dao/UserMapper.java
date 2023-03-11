@@ -6,10 +6,10 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper {
 
-    public Integer insertUser(User user);
-    public User queryUserById(Integer id);
-    public Integer updateUser(User user);
-    public Integer deleteUserById(Integer id);
-    public User queryUserByAccount(String account);
-    public Integer updatePasswordById(Integer id, String psw);
+    Integer insertUser(User user);
+    User queryUserById(Integer id);
+    Integer updateUser(User user);
+    Integer deleteUserById(Integer id);
+    User queryUserByAccount(String account);
+    Integer updatePasswordById(Integer id, String psw);
 }

@@ -8,9 +8,6 @@ import com.classmanagement.service.StudentService;
 import com.classmanagement.util.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.DigestUtils;
-
-import java.nio.charset.StandardCharsets;
 
 @Service
 public class StudentServiceImpl implements StudentService {

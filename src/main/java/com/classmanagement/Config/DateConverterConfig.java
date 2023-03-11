@@ -40,7 +40,7 @@ public class DateConverterConfig implements Converter<String, Date> {
     }
     
     public Date parseDate(String dateStr, String format){
-        Date date = null;
+        Date date;
         try {
             DateFormat simpleDateFormat = new SimpleDateFormat(format);
             date = simpleDateFormat.parse(dateStr);

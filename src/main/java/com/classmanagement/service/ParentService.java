@@ -6,8 +6,8 @@ import com.classmanagement.entity.User;
 public interface ParentService {
 
     /*返回userId*/
-    public Integer addParent(User user, Parent parent);
-    public Integer deleteParentById(Integer id);
-    public Integer updateParent(Parent parent);
-    public Parent queryParentById(Integer id);
+    Integer addParent(User user, Parent parent);
+    Integer deleteParentById(Integer id);
+    Integer updateParent(Parent parent);
+    Parent queryParentById(Integer id);
 }

@@ -6,8 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ParentMapper {
 
-    public Integer insertParent(Parent parent);
-    public Parent queryParentById(Integer id);
-    public Integer updateParent(Parent parent);
-    public Integer deleteParentById(Integer id);
+    Integer insertParent(Parent parent);
+    Parent queryParentById(Integer id);
+    Integer updateParent(Parent parent);
+    Integer deleteParentById(Integer id);
 }

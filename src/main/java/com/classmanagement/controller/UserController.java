@@ -62,7 +62,7 @@ public class UserController {
     public Result registerParent(Parent parent, @RequestParam("account") String account){
         Result result = new Result();
         User user = new User(account, "123456", 3);
-        Integer userId = parentService.addParent(user, parent);
+        parentService.addParent(user, parent);
         result.setCode(Result.SUCCESS);
         result.setMessage("注册成功");
         user.setPassword(null);

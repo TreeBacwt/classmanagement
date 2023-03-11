@@ -4,6 +4,6 @@ import com.classmanagement.entity.User;
 
 public interface UserService {
 
-    public User queryUserByAccount(String account);
-    public Integer updatePasswordById(Integer id, String psw);
+    User queryUserByAccount(String account);
+    Integer updatePasswordById(Integer id, String psw);
 }

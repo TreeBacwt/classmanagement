@@ -6,9 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface AffairMapper {
 
-    public Integer insertAffair(Affair affair);
-    public Affair queryAffairById(Integer id);
-    public Integer updateAffair(Affair affair);
-    public Integer deleteAffairById(Integer id);
+    Integer insertAffair(Affair affair);
+    Affair queryAffairById(Integer id);
+    Integer updateAffair(Affair affair);
+    Integer deleteAffairById(Integer id);
 
 }

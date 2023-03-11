@@ -1,7 +1,6 @@
 package com.classmanagement.ExceptionHandler;
 
 import com.classmanagement.ClassManagementApplication;
-import com.classmanagement.controller.UserController;
 import com.classmanagement.util.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
