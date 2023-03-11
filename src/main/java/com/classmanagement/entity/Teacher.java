@@ -28,6 +28,13 @@ public class Teacher {
         this.userId = userId;
     }
 
+    public Teacher(String teacherName, Integer sex, String subject, String information) {
+        this.teacherName = teacherName;
+        this.sex = sex;
+        this.subject = subject;
+        this.information = information;
+    }
+
     @Override
     public String toString() {
         return "Teacher{" +

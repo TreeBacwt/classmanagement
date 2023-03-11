@@ -16,4 +16,9 @@ public class UserServiceImpl implements UserService {
     public User queryUserByAccount(String account) {
         return userMapper.queryUserByAccount(account);
     }
+
+    @Override
+    public Integer updatePasswordById(Integer id, String psw) {
+        return userMapper.updatePasswordById(id, psw);
+    }
 }

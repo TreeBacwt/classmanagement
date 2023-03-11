@@ -16,6 +16,10 @@ public class Result {
         return new Result(SUCCESS, message, data);
     }
 
+    public static Result success(String message){
+        return success(message, null);
+    }
+
     public static Result fail(String message, Object data){
         return new Result(FAIL, message, data);
     }

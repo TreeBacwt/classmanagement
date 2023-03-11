@@ -40,8 +40,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Integer updateStudent(Student student) {
-        studentMapper.updateStudent(student);
-        return 1;
+        return studentMapper.updateStudent(student);
     }
 
     @Override

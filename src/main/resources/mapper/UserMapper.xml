@@ -40,4 +40,10 @@
         where account = #{account}
     </select>
 
+    <update id="updatePasswordById">
+        update user
+        set password = #{psw}
+        where id = #{id}
+    </update>
+
 </mapper>

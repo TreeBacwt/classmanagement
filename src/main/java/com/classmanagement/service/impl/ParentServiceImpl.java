@@ -37,8 +37,7 @@ public class ParentServiceImpl implements ParentService {
 
     @Override
     public Integer updateParent(Parent parent) {
-        parentMapper.updateParent(parent);
-        return 1;
+        return parentMapper.updateParent(parent);
     }
 
     @Override

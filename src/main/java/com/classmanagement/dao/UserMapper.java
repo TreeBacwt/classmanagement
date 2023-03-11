@@ -11,4 +11,5 @@ public interface UserMapper {
     public Integer updateUser(User user);
     public Integer deleteUserById(Integer id);
     public User queryUserByAccount(String account);
+    public Integer updatePasswordById(Integer id, String psw);
 }

@@ -12,10 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -54,16 +51,17 @@ public class UserController {
 
     /*注册学生账号*/
     @PostMapping("/register/stu")
-    public Result registerStudent(Student student){
-        User user = new User(student.getStudentName(), "123456", 2);//密码默认为123456
+    public Result registerStudent(Student student, @RequestParam("account") String account){
+        User user = new User(account, "123456", 2);//密码默认为123456
         Integer userId = studentService.addStudent(user, student);
         return new Result(userId, "用户ID");
     }
 
+    /*注册家长账号*/
     @PostMapping("/register/par")
-    public Result registerParent(Parent parent){
+    public Result registerParent(Parent parent, @RequestParam("account") String account){
         Result result = new Result();
-        User user = new User(parent.getParentName(), "123456", 3);
+        User user = new User(account, "123456", 3);
         Integer userId = parentService.addParent(user, parent);
         result.setCode(Result.SUCCESS);
         result.setMessage("注册成功");
@@ -72,4 +70,11 @@ public class UserController {
         return result;
     }
 
+    @PutMapping("/upd/psw")
+    public Result updatePassword(@RequestParam("id") Integer id, @RequestParam("password") String psw){
+        Integer updatePasswordById = userService.updatePasswordById(id, Md5Util.md5(psw));
+        if (updatePasswordById == 1) {
+            return Result.success("密码修改成功！");
+        }else return Result.fail("密码修改失败！");
+    }
 }
