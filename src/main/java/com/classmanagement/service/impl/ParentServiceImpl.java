@@ -6,16 +6,20 @@ import com.classmanagement.entity.Parent;
 import com.classmanagement.entity.User;
 import com.classmanagement.service.ParentService;
 import com.classmanagement.util.Md5Util;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ParentServiceImpl implements ParentService {
 
-    @Autowired
+    final
     UserMapper userMapper;
-    @Autowired
+    final
     ParentMapper parentMapper;
+
+    public ParentServiceImpl(UserMapper userMapper, ParentMapper parentMapper) {
+        this.userMapper = userMapper;
+        this.parentMapper = parentMapper;
+    }
 
     @Override
     public Integer addParent(User user, Parent parent) {

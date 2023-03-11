@@ -10,7 +10,6 @@ import com.classmanagement.util.Md5Util;
 import com.classmanagement.util.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,14 +17,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
+    final
     UserService userService;
-    @Autowired
+    final
     StudentService studentService;
-    @Autowired
+    final
     ParentService parentService;
 
     static Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    public UserController(UserService userService, StudentService studentService, ParentService parentService) {
+        this.userService = userService;
+        this.studentService = studentService;
+        this.parentService = parentService;
+    }
 
     /*处理账户名重复异常*/
     @ExceptionHandler({DuplicateKeyException.class})

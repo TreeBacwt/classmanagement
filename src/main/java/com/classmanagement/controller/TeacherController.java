@@ -3,7 +3,6 @@ package com.classmanagement.controller;
 import com.classmanagement.entity.Teacher;
 import com.classmanagement.service.TeacherService;
 import com.classmanagement.util.Result;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,8 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/teacher")
 public class TeacherController {
 
-    @Autowired
+    final
     TeacherService teacherService;
+
+    public TeacherController(TeacherService teacherService) {
+        this.teacherService = teacherService;
+    }
 
     @PutMapping("/upd")
     public Result updateTeacher(Teacher teacher){

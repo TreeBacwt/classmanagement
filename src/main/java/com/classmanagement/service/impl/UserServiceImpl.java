@@ -3,14 +3,17 @@ package com.classmanagement.service.impl;
 import com.classmanagement.dao.UserMapper;
 import com.classmanagement.entity.User;
 import com.classmanagement.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
+    final
     UserMapper userMapper;
+
+    public UserServiceImpl(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
 
     @Override
     public User queryUserByAccount(String account) {

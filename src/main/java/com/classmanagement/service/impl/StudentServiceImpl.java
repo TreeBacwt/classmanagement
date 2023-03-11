@@ -6,16 +6,20 @@ import com.classmanagement.entity.Student;
 import com.classmanagement.entity.User;
 import com.classmanagement.service.StudentService;
 import com.classmanagement.util.Md5Util;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    @Autowired
+    final
     UserMapper userMapper;
-    @Autowired
+    final
     StudentMapper studentMapper;
+
+    public StudentServiceImpl(UserMapper userMapper, StudentMapper studentMapper) {
+        this.userMapper = userMapper;
+        this.studentMapper = studentMapper;
+    }
 
     @Override
     public Integer addStudent(User user, Student student) {

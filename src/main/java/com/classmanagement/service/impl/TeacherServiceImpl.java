@@ -6,16 +6,21 @@ import com.classmanagement.entity.Teacher;
 import com.classmanagement.entity.User;
 import com.classmanagement.service.TeacherService;
 import com.classmanagement.util.Md5Util;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
 
-    @Autowired
+    final
     UserMapper userMapper;
-    @Autowired
+    final
     TeacherMapper teacherMapper;
+
+    public TeacherServiceImpl(UserMapper userMapper, TeacherMapper teacherMapper) {
+        this.userMapper = userMapper;
+        this.teacherMapper = teacherMapper;
+    }
+
     @Override
     public Integer addTeacher(User user, Teacher teacher) {
         Md5Util.md5(user);
