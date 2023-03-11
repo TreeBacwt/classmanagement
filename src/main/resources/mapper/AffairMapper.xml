@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.classmanagement.dao.AffairMapper">
+
+    <resultMap id="affairMap" type="affair">
+        <id column="id" property="id"/>
+        <result column="affair_name" property="affairName"/>
+        <result column="affair_date" property="affairDate"/>
+        <result column="information" property="information"/>
+        <result column="result" property="result"/>
+    </resultMap>
+
+    <insert id="insertAffair" parameterType="affair" useGeneratedKeys="true" keyProperty="id">
+        insert into affair (affair_name, affair_date, information, result)
+        values (#{affairName}, #{affairDate}, #{information}, #{result})
+    </insert>
+
+    <select id="queryAffairById" resultMap="affairMap">
+        select *
+        from affair
+        where id = #{id}
+    </select>
+
+    <update id="updateAffair" parameterType="affair">
+        update affair
+        set
+            affair_name = #{affairName},
+            affair_date = #{affairDate},
+            information = #{information},
+            result = #{result}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAffairById">
+        delete
+        from affair
+        where id = #{id}
+    </delete>
+
+</mapper>
