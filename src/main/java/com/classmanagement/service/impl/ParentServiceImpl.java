@@ -8,6 +8,8 @@ import com.classmanagement.service.ParentService;
 import com.classmanagement.util.Md5Util;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ParentServiceImpl implements ParentService {
 
@@ -47,5 +49,10 @@ public class ParentServiceImpl implements ParentService {
     @Override
     public Parent queryParentById(Integer id) {
         return parentMapper.queryParentById(id);
+    }
+
+    @Override
+    public List<Parent> queryParentsLimitIn10(Integer page) {
+        return parentMapper.queryParentsLimit((page - 1) * 10, 10);
     }
 }

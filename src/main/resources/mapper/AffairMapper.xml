@@ -39,4 +39,16 @@
         where id = #{id}
     </delete>
 
+    <select id="queryAffairsByAffairNameKeyWordLimit" resultMap="affairMap">
+        select *
+        from affair
+        where affair_name like "%"#{keyWord}"%"
+        limit #{start}, #{limit}
+    </select>
+
+    <select id="queryAffairsLimit" resultMap="affairMap">
+        select *
+        from affair
+        limit #{start}, #{limit}
+    </select>
 </mapper>

@@ -46,4 +46,10 @@
         where id = #{id}
     </update>
 
+    <select id="queryUsersLimit" resultMap="userMap">
+        select *
+        from user
+        limit #{start}, #{limit}
+    </select>
+
 </mapper>

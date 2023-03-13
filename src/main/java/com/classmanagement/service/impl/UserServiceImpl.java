@@ -5,6 +5,8 @@ import com.classmanagement.entity.User;
 import com.classmanagement.service.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -23,5 +25,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer updatePasswordById(Integer id, String psw) {
         return userMapper.updatePasswordById(id, psw);
+    }
+
+    @Override
+    public List<User> queryUsersLimitIn10(Integer page) {
+        return userMapper.queryUsersLimit((page - 1) * 10, 10);
     }
 }

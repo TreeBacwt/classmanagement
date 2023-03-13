@@ -38,4 +38,10 @@
         where id = #{id}
     </delete>
 
+    <select id="queryParentsLimit" resultMap="parentMap">
+        select *
+        from parent
+        limit #{start}, {limit}
+    </select>
+
 </mapper>

@@ -23,7 +23,7 @@ public class StudentServiceTest {
 
     @Test
     void query(){
-        System.out.println(studentService.queryStudentByStudentNum(2));
+        System.out.println(studentService.queryStudentByStudentNum(3));
     }
 
     @Test

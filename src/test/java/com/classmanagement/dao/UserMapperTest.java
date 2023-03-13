@@ -20,7 +20,8 @@ public class UserMapperTest {
 
     @Test
     void query(){
-        System.out.println(userMapper.queryUserById(1));
+        //System.out.println(userMapper.queryUserById(1));
+        System.out.println(userMapper.queryUsersLimit(0, 5));
     }
 
     @Test

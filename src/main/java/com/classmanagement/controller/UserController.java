@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -81,5 +83,14 @@ public class UserController {
         if (updatePasswordById == 1) {
             return Result.success("密码修改成功！");
         }else return Result.fail("密码修改失败！");
+    }
+
+    /*分页方式返回user，页面大小为10*/
+    @GetMapping("/list/{page}")
+    public Result getUsersByPageSize10(@PathVariable("page") Integer page){
+        List<User> users = userService.queryUsersLimitIn10(page);
+        if (users.size() != 0){
+            return Result.success("第" + page + "页查找成功！", users);
+        }else return Result.fail("没有相关数据！");
     }
 }

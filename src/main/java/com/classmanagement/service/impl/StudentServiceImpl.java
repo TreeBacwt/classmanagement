@@ -8,6 +8,8 @@ import com.classmanagement.service.StudentService;
 import com.classmanagement.util.Md5Util;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class StudentServiceImpl implements StudentService {
 
@@ -47,6 +49,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student queryStudentByStudentNum(Integer studentNum) {
         return studentMapper.queryStudentByStudentNum(studentNum);
+    }
+
+    @Override
+    public List<Student> queryStudentsLimitIn10(Integer page) {
+        return studentMapper.queryStudentsLimit((page - 1) * 10, 10);
     }
 
 }

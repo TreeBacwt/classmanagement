@@ -46,4 +46,10 @@
         where student_num = #{studentNum}
     </delete>
 
+    <select id="queryStudentsLimit" resultMap="studentMap">
+        select *
+        from student
+        limit #{start}, #{limit};
+    </select>
+
 </mapper>
