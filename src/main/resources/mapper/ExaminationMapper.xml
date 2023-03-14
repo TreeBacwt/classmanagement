@@ -35,4 +35,10 @@
         where id = #{id}
     </delete>
 
+    <select id="queryExaminationLimit" resultMap="examinationMap">
+        select *
+        from examination
+        limit #{start}, #{limit}
+    </select>
+
 </mapper>

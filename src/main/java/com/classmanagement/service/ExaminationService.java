@@ -1,17 +1,15 @@
-package com.classmanagement.dao;
+package com.classmanagement.service;
 
 import com.classmanagement.entity.Examination;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-@Mapper
-public interface ExaminationMapper {
+public interface ExaminationService {
 
     Integer insertExamination(Examination examination);
     Examination queryExaminationById(Integer id);
     Integer updateExamination(Examination examination);
     Integer deleteExaminationById(Integer id);
-    List<Examination> queryExaminationLimit(Integer start, Integer limit);
+    List<Examination> queryExaminationLimitIn10(Integer page);
 
 }
