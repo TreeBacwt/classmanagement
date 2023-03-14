@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.classmanagement.dao.ExaminationMapper">
+
+    <resultMap id="examinationMap" type="examination">
+        <id column="id" property="id"/>
+        <result column="examination_name" property="examinationName"/>
+        <result column="examination_date" property="examinationDate"/>
+    </resultMap>
+
+    <insert id="insertExamination" parameterType="examination" useGeneratedKeys="true" keyProperty="id">
+        insert into examination (examination_name, examination_date)
+        values (#{examinationName}, #{examinationDate})
+    </insert>
+
+    <select id="queryExaminationById" resultMap="examinationMap">
+        select *
+        from examination
+        where id = #{id}
+    </select>
+
+    <update id="updateExamination" parameterType="examination">
+        update examination
+        set
+            examination_name = #{examinationName},
+            examination_date = #{examinationDate}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteExaminationById">
+        delete
+        from examination
+        where id = #{id}
+    </delete>
+
+</mapper>

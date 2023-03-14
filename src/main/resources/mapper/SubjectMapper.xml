@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.classmanagement.dao.SubjectMapper">
+
+    <resultMap id="subjectMap" type="subject">
+        <id column="id" property="id"/>
+        <result column="subject_name" property="subjectName"/>
+    </resultMap>
+
+    <insert id="insertSubject" parameterType="subject" useGeneratedKeys="true" keyProperty="id">
+        insert into subject (subject_name)
+        values (#{subjectName})
+    </insert>
+
+    <select id="querySubjectById" resultMap="subjectMap">
+        select *
+        from subject
+        where id = #{id}
+    </select>
+
+    <update id="updateSubject" parameterType="subject">
+        update subject
+        set subject_name = #{subjectName}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSubjectById">
+        delete
+        from subject
+        where id = #{id}
+    </delete>
+
+    <select id="querySubjectsLimit" resultMap="subjectMap">
+        select *
+        from subject
+        limit #{start}, #{limit}
+    </select>
+
+    <insert id="insertSubjects" parameterType="subject">
+        insert into subject (subject_name) values 
+            <foreach collection="list" item="subject" separator=",">
+                (#{subject.subjectName})
+            </foreach>
+    </insert>
+
+</mapper>
