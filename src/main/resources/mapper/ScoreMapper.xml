@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.classmanagement.dao.ScoreMapper">
+
+    <resultMap id="scoreMap" type="score">
+        <id column="subject_id" property="subjectId"/>
+        <id column="examination_id" property="examinationId"/>
+        <id column="student_num" property="studentNum"/>
+        <result column="score" property="score"/>
+    </resultMap>
+
+    <insert id="insertScore" parameterType="score">
+        insert into score (subject_id, examination_id, student_num, score)
+        values (#{subjectId}, #{examinationId}, #{studentNum}, #{score})
+    </insert>
+
+    <update id="updateScore" parameterType="score">
+        update score
+        set
+        score = #{score}
+        where subject_id = #{subjectId} and examination_id = #{examinationId} and student_num = #{studentNum}
+    </update>
+
+    <delete id="deleteScore" parameterType="score">
+        delete
+        from score
+        where subject_id = #{subjectId} and examination_id = #{examinationId} and student_num = #{studentNum}
+    </delete>
+
+    <select id="queryScoresBySubjectId" resultMap="scoreMap">
+        select *
+        from score
+        where subject_id = #{subjectId}
+        limit #{start}, #{limit}
+    </select>
+
+    <select id="queryScoresByExaminationId" resultMap="scoreMap">
+        select *
+        from score
+        where examination_id = #{examinationId}
+        limit #{start}, #{limit}
+    </select>
+
+    <select id="queryScoresByStudentNum" resultMap="scoreMap">
+        select *
+        from score
+        where student_num = #{studentNum}
+        limit #{start}, #{limit}
+    </select>
+
+    <insert id="insertScores" parameterType="score">
+        insert into score (subject_id, examination_id, student_num, score) values
+            <foreach collection="list" item="score" separator=",">
+                (#{score.subjectId}, #{score.examinationId}, #{score.studentNum}, #{score.score})
+            </foreach>
+    </insert>
+
+</mapper>
