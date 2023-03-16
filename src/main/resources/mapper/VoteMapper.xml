@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.classmanagement.dao.VoteMapper">
+
+    <resultMap id="voteMap" type="vote">
+        <id column="id" property="id"/>
+        <result column="vote_name" property="voteName"/>
+        <result column="information" property="information"/>
+        <result column="vote_date" property="voteDate"/>
+        <result column="keep_time" property="keepTime"/>
+        <result column="is_over" property="isOver"/>
+        <result column="participant" property="participant"/>
+        <result column="options_number" property="optionsNumber"/>
+    </resultMap>
+
+    <insert id="insertVote" parameterType="vote" useGeneratedKeys="true" keyProperty="id">
+        insert into vote (vote_name, information, vote_date, keep_time, is_over, participant, options_number)
+        values (#{voteName}, #{information}, #{voteDate}, #{keepTime}, #{isOver}, #{participant}, #{optionsNumber})
+    </insert>
+
+    <select id="queryVoteById" resultMap="voteMap">
+        select *
+        from vote
+        where id = #{id}
+    </select>
+
+    <update id="updateVote" parameterType="vote">
+        update vote
+        set
+        vote_name = #{voteName},
+        information = #{information},
+        vote_date = #{voteDate},
+        keep_time = #{keepTime},
+        is_over = #{isOver},
+        participant = #{participant},
+        options_number = #{optionsNumber}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteVoteById">
+        delete
+        from vote
+        where id = #{id}
+    </delete>
+
+    <select id="queryVotesLimit" resultMap="voteMap">
+        select *
+        from vote
+        limit #{start}, #{limit}
+    </select>
+
+</mapper>

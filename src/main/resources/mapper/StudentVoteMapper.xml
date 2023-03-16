@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.classmanagement.dao.StudentVoteMapper">
+
+    <resultMap id="studentVoteMap" type="studentVote">
+        <id column="student_num" property="studentNum"/>
+        <id column="vote_option_id" property="voteOptionId"/>
+    </resultMap>
+
+    <insert id="insertStudentVote" parameterType="studentVote">
+        insert into student_vote (student_num, vote_option_id)
+        values (#{studentNum}, #{voteOptionId})
+    </insert>
+
+    <select id="queryStudentVotesByVoteOptionId" resultMap="studentVoteMap">
+        select *
+        from student_vote
+        where vote_option_id = #{voteOptionId}
+    </select>
+
+    <delete id="deleteStudentVoteByStudentNumAndVoteOptionId">
+        delete
+        from student_vote
+        where student_num = #{studentNum} and vote_option_id = #{voteOptionId}
+    </delete>
+
+</mapper>

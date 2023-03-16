@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.classmanagement.dao.VoteOptionMapper">
+
+    <resultMap id="voteOptionMap" type="voteOption">
+        <id column="id" property="id"/>
+        <result column="content" property="content"/>
+        <result column="number" property="number"/>
+        <result column="vote_id" property="voteId"/>
+    </resultMap>
+
+    <insert id="insertVoteOption" parameterType="voteOption" useGeneratedKeys="true" keyProperty="id">
+        insert into vote_option (content, number, vote_id)
+        values (#{content}, #{number}, #{voteId})
+    </insert>
+
+    <select id="queryVoteOptionById" resultMap="voteOptionMap">
+        select *
+        from vote_option
+        where id = #{id}
+    </select>
+
+    <update id="updateVoteOption" parameterType="voteOption">
+        update vote_option
+        set
+        content = #{content},
+        number = #{number},
+        vote_id = #{voteId}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteVoteOptionById">
+        delete
+        from vote_option
+        where id = #{id}
+    </delete>
+
+    <select id="queryVoteOptionsByVoteIdLimit" resultMap="voteOptionMap">
+        select *
+        from vote_option
+        where vote_id = #{voteId}
+        limit #{start}, #{limit}
+    </select>
+
+</mapper>
