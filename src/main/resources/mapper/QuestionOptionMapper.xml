@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.classmanagement.dao.QuestionOptionMapper">
+
+    <resultMap id="questionOptionMap" type="questionOption">
+        <id column="id" property="id"/>
+        <result column="question_id" property="questionId"/>
+        <result column="content" property="content"/>
+        <result column="number" property="number"/>
+    </resultMap>
+
+    <insert id="insertQuestionOption" parameterType="questionOption" useGeneratedKeys="true" keyProperty="id">
+        insert into question_option (question_id, content, number)
+        values (#{questionId}, #{content}, #{number})
+    </insert>
+
+    <select id="queryQuestionOptionByQuestionId" resultMap="questionOptionMap">
+        select *
+        from question_option
+        where question_id = #{questionId}
+    </select>
+
+    <update id="updateQuestionOption" parameterType="questionOption">
+        update question_option
+        set
+           content = #{content},
+           number = #{number},
+        where id = #{id}
+    </update>
+
+    <delete id="deleteQuestionOptionById">
+        delete
+        from question_option
+        where id = #{id}
+    </delete>
+
+</mapper>

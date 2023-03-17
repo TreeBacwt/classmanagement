@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.classmanagement.dao.QuestionMapper">
+
+    <resultMap id="questionMap" type="question">
+        <id column="id" property="id"/>
+        <result column="description" property="description"/>
+        <result column="number" property="number"/>
+        <result column="type" property="type"/>
+        <result column="questionnaire_id" property="questionnaireId"/>
+    </resultMap>
+
+    <insert id="insertQuestion" parameterType="question" useGeneratedKeys="true" keyProperty="id">
+        insert into question (description, number, type, questionnaire_id)
+        values (#{description}, #{number}, #{type}, #{questionnaireId})
+    </insert>
+
+    <select id="queryQuestionsByQuestionnaireId" resultMap="questionMap">
+        select *
+        from question
+        where questionnaire_id = #{questionnaireId}
+    </select>
+
+    <update id="updateQuestion" parameterType="question">
+        update question
+        set
+            description = #{description},
+            number = #{number},
+            type = #{type},
+        where id = #{id}
+    </update>
+
+    <delete id="deleteQuestionById">
+        delete
+        from question
+        where id = #{id}
+    </delete>
+
+</mapper>

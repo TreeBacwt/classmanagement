@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.classmanagement.dao.AnswerMapper">
+
+    <resultMap id="answerMap" type="answer">
+        <id column="question_id" property="questionId"/>
+        <id column="parent_id" property="parentId"/>
+        <result column="content" property="content"/>
+    </resultMap>
+
+    <insert id="insertAnswer" parameterType="answer">
+        insert into answer (question_id, content, parent_id)
+        values (#{questionId}, #{content}, #{parentId})
+    </insert>
+
+    <select id="queryAnswerByQuestionId" resultMap="answerMap">
+        select *
+        from answer
+        where question_id = #{questionId}
+    </select>
+
+</mapper>

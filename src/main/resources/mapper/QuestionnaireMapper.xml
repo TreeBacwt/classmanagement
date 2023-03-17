@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.classmanagement.dao.QuestionnaireMapper">
+
+    <resultMap id="questionnaireMap" type="questionnaire">
+        <id column="id" property="id"/>
+        <result column="questionnaire_name" property="questionnaireName"/>
+        <result column="questionnaire_date" property="questionnaireDate"/>
+        <result column="information" property="information"/>
+        <result column="respondent" property="respondent"/>
+        <result column="is_over" property="isOver"/>
+        <result column="keep_time" property="keepTime"/>
+    </resultMap>
+
+    <insert id="insertQuestionnaire" parameterType="questionnaire" useGeneratedKeys="true" keyProperty="id">
+        insert into questionnaire (questionnaire_name, questionnaire_date, information, respondent, is_over, keep_time)
+        values (#{questionnaireName}, #{questionnaireDate}, #{information}, #{respondent}, #{isOver},#{keepTime})
+    </insert>
+
+    <select id="queryQuestionnaireById" resultMap="questionnaireMap">
+        select *
+        from questionnaire
+        where id = #{id}
+    </select>
+
+    <update id="updateQuestionnaire" parameterType="questionnaire">
+        update questionnaire
+        set
+            questionnaire_name = #{questionnaireName},
+            questionnaire_date = #{questionnaireDate},
+            information = #{information},
+            respondent = #{respondent},
+            is_over = #{isOver},
+            keep_time = #{keepTime}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteQuestionnaireById">
+        delete
+        from questionnaire
+        where id = #{id}
+    </delete>
+
+    <select id="queryQuestionnairesLimit" resultMap="questionnaireMap">
+        select *
+        from questionnaire
+        limit #{start}, #{limit}
+    </select>
+
+</mapper>
