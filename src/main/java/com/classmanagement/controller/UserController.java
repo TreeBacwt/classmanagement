@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin
 public class UserController {
 
     final
@@ -78,11 +79,17 @@ public class UserController {
     }
 
     @PutMapping("/upd/psw")
-    public Result updatePassword(@RequestParam("id") Integer id, @RequestParam("password") String psw){
-        Integer updatePasswordById = userService.updatePasswordById(id, Md5Util.md5(psw));
-        if (updatePasswordById == 1) {
-            return Result.success("密码修改成功！");
-        }else return Result.fail("密码修改失败！");
+    public Result updatePassword(@RequestParam("id") Integer id, @RequestParam("oldPassword") String oldPsw, @RequestParam("newPassword") String newPsw){
+        User userFromDB = userService.queryUserById(id);
+        if (userFromDB != null) {
+            if (Md5Util.verify(oldPsw, userFromDB.getPassword())) {
+                //密码正确
+                Integer updatePasswordById = userService.updatePasswordById(id, Md5Util.md5(newPsw));
+                if (updatePasswordById == 1) {
+                    return Result.success("密码修改成功！");
+                }else return Result.fail("发生错误,请稍后再试！");
+            }else return Result.fail("密码错误");
+        }else return new Result(-1, "没有相关数据，请重新登录！");
     }
 
     /*分页方式返回user，页面大小为10*/

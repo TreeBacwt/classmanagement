@@ -39,4 +39,10 @@
         where id = #{id}
     </delete>
 
+    <select id="queryTeacherByUserId" resultMap="teacherMap" parameterType="int">
+        select *
+        from teacher
+        where user_id = #{uid}
+    </select>
+
 </mapper>

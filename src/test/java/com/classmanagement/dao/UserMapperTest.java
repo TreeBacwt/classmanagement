@@ -1,6 +1,7 @@
 package com.classmanagement.dao;
 
 import com.classmanagement.entity.User;
+import com.classmanagement.util.Md5Util;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +27,8 @@ public class UserMapperTest {
 
     @Test
     void update(){
-        System.out.println(userMapper.updateUser(new User(2, "zyx2", "112233", 1)));
+        //System.out.println(userMapper.updateUser(new User(2, "zyx2", "112233", 1)));
+        userMapper.updatePasswordById(1, Md5Util.md5("123456"));
     }
 
     @Test

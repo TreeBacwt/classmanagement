@@ -9,4 +9,5 @@ public interface TeacherMapper {
     Teacher queryTeacherById(Integer id);
     Integer updateTeacher(Teacher teacher);
     Integer deleteTeacherById(Integer id);
+    Teacher queryTeacherByUserId(Integer uid);
 }

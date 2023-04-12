@@ -35,4 +35,9 @@ public class TeacherServiceImpl implements TeacherService {
     public Integer updateTeacher(Teacher teacher) {
         return teacherMapper.updateTeacher(teacher);
     }
+
+    @Override
+    public Teacher queryTeacherByUserId(Integer uid) {
+        return teacherMapper.queryTeacherByUserId(uid);
+    }
 }

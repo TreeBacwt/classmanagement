@@ -31,4 +31,9 @@ public class UserServiceImpl implements UserService {
     public List<User> queryUsersLimitIn10(Integer page) {
         return userMapper.queryUsersLimit((page - 1) * 10, 10);
     }
+
+    @Override
+    public User queryUserById(Integer id) {
+        return userMapper.queryUserById(id);
+    }
 }
