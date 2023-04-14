@@ -9,10 +9,17 @@ import java.util.List;
 public interface AffairMapper {
 
     Integer insertAffair(Affair affair);
+
     Affair queryAffairById(Integer id);
+
     Integer updateAffair(Affair affair);
+
     Integer deleteAffairById(Integer id);
+
     List<Affair> queryAffairsByAffairNameKeyWordLimit(String keyWord, Integer start, Integer limit);
+
     List<Affair> queryAffairsLimit(Integer start, Integer limit);
+
+    Integer queryAffairsCount();
 
 }

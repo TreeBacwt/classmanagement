@@ -46,4 +46,9 @@ public class AffairServiceImpl implements AffairService {
     public Integer deleteAffairById(Integer id) {
         return affairMapper.deleteAffairById(id);
     }
+
+    @Override
+    public Integer queryAffairsCount() {
+        return affairMapper.queryAffairsCount();
+    }
 }

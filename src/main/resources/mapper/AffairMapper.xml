@@ -25,11 +25,10 @@
 
     <update id="updateAffair" parameterType="affair">
         update affair
-        set
-            affair_name = #{affairName},
+        set affair_name = #{affairName},
             affair_date = #{affairDate},
             information = #{information},
-            result = #{result}
+            result      = #{result}
         where id = #{id}
     </update>
 
@@ -42,13 +41,19 @@
     <select id="queryAffairsByAffairNameKeyWordLimit" resultMap="affairMap">
         select *
         from affair
-        where affair_name like "%"#{keyWord}"%"
-        limit #{start}, #{limit}
+        order by affair_date where affair_name like "%"#{keyWord}"%"
+            limit #{start}, #{limit}
     </select>
 
     <select id="queryAffairsLimit" resultMap="affairMap">
         select *
         from affair
-        limit #{start}, #{limit}
+        order by affair_date
+            limit #{start}, #{limit}
+    </select>
+
+    <select id="queryAffairsCount" resultType="int">
+        select count(*)
+        from affair
     </select>
 </mapper>
