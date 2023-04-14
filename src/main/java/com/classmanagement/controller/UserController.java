@@ -124,4 +124,12 @@ public class UserController {
             return Result.fail("该账户名已存在！");
         } else return Result.success("该账户名可用！");
     }
+
+    @GetMapping("/resetPsw/{id}")
+    public Result resetPassword(@PathVariable("id") Integer id) {
+        Integer updatePasswordById = userService.updatePasswordById(id, Md5Util.md5("123456"));
+        if (updatePasswordById == 1) {
+            return Result.success("重置密码成功！");
+        } else return Result.fail("重置密码失败！");
+    }
 }

@@ -23,4 +23,6 @@ public interface StudentMapper {
     List<Student> queryAllStudents();
 
     Student queryStudentByUserId(Integer uid);
+
+    Integer queryStudentIsLeaderByUserId(Integer uid);
 }

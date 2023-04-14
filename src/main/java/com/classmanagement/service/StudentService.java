@@ -20,4 +20,6 @@ public interface StudentService {
 
     List<Student> queryAllStudents();
 
+    Integer queryStudentIsLeaderByUserId(Integer uid);
+
 }

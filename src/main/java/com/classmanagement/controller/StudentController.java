@@ -42,4 +42,10 @@ public class StudentController {
             return Result.success("学生列表查询成功！", students);
         } else return Result.fail("没有相关数据");
     }
+
+    @GetMapping("/isLeader/{uid}")
+    public Result queryStudentIsLeaderByUserId(@PathVariable("uid") Integer uid) {
+        Integer isLeader = studentService.queryStudentIsLeaderByUserId(uid);
+        return new Result(isLeader, "");
+    }
 }

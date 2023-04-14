@@ -66,4 +66,10 @@
         where user_id = #{uid}
     </select>
 
+    <select id="queryStudentIsLeaderByUserId">
+        select is_leader
+        from student
+        where user_id = #{uid}
+    </select>
+
 </mapper>

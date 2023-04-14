@@ -63,4 +63,9 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.queryAllStudents();
     }
 
+    @Override
+    public Integer queryStudentIsLeaderByUserId(Integer uid) {
+        return studentMapper.queryStudentByUserId(uid).getIsLeader();
+    }
+
 }
