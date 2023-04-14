@@ -9,8 +9,14 @@ import java.util.List;
 public interface ParentMapper {
 
     Integer insertParent(Parent parent);
+
     Parent queryParentById(Integer id);
+
     Integer updateParent(Parent parent);
+
     Integer deleteParentById(Integer id);
+
     List<Parent> queryParentsLimit(Integer start, Integer limit);
+
+    Integer deleteParentByUserId(Integer uid);
 }

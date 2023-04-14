@@ -15,4 +15,5 @@ public interface UserMapper {
     User queryUserByAccount(String account);
     Integer updatePasswordById(Integer id, String psw);
     List<User> queryUsersLimit(Integer start, Integer limit);
+    List<User> queryAllUsers();
 }

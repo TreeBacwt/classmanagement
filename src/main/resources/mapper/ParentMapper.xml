@@ -25,10 +25,9 @@
 
     <update id="updateParent" parameterType="parent">
         update parent
-        set
-           parent_name = #{parentName},
-           student_num = #{studentNum},
-           information = #{information}
+        set parent_name = #{parentName},
+            student_num = #{studentNum},
+            information = #{information}
         where id = #{id}
     </update>
 
@@ -40,8 +39,13 @@
 
     <select id="queryParentsLimit" resultMap="parentMap">
         select *
-        from parent
-        limit #{start}, {limit}
+        from parent limit #{start}, {limit}
     </select>
+
+    <delete id="deleteParentByUserId">
+        delete
+        from parent
+        where user_id = #{uid}
+    </delete>
 
 </mapper>

@@ -29,14 +29,13 @@
 
     <update id="updateStudent" parameterType="student">
         update student
-        set
-            student_name = #{studentName},
-            sex = #{sex},
-            birthday = #{birthday},
-            address = #{address},
-            ethnic = #{ethnic},
-            information = #{information},
-            is_leader = #{isLeader}
+        set student_name = #{studentName},
+            sex          = #{sex},
+            birthday     = #{birthday},
+            address      = #{address},
+            ethnic       = #{ethnic},
+            information  = #{information},
+            is_leader    = #{isLeader}
         where student_num = #{studentNum}
     </update>
 
@@ -48,8 +47,13 @@
 
     <select id="queryStudentsLimit" resultMap="studentMap">
         select *
-        from student
-        limit #{start}, #{limit};
+        from student limit #{start}, #{limit}
     </select>
+
+    <delete id="deleteStudentByUserId">
+        delete
+        from student
+        where user_id = #{uid}
+    </delete>
 
 </mapper>

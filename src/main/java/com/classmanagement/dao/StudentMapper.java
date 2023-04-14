@@ -9,8 +9,14 @@ import java.util.List;
 public interface StudentMapper {
 
     Integer insertStudent(Student student);
+
     Student queryStudentByStudentNum(Integer studentNum);
+
     Integer updateStudent(Student student);
+
     Integer deleteStudentByStudentNum(Integer studentNum);
+
     List<Student> queryStudentsLimit(Integer start, Integer limit);
+
+    Integer deleteStudentByUserId(Integer uid);
 }

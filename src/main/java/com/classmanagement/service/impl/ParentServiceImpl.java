@@ -7,6 +7,7 @@ import com.classmanagement.entity.User;
 import com.classmanagement.service.ParentService;
 import com.classmanagement.util.Md5Util;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class ParentServiceImpl implements ParentService {
         this.parentMapper = parentMapper;
     }
 
+    @Transactional
     @Override
     public Integer addParent(User user, Parent parent) {
         Md5Util.md5(user);

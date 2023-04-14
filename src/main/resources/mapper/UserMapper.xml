@@ -52,4 +52,9 @@
         limit #{start}, #{limit}
     </select>
 
+    <select id="queryAllUsers" resultMap="userMap">
+        select id, account, role
+        from user
+    </select>
+
 </mapper>

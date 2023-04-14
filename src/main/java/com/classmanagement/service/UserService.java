@@ -10,4 +10,6 @@ public interface UserService {
     Integer updatePasswordById(Integer id, String psw);
     List<User> queryUsersLimitIn10(Integer page);
     User queryUserById(Integer id);
+    List<User> queryAllUsers();
+    Integer deleteUserById(Integer id);
 }

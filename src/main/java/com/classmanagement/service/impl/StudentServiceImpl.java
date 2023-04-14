@@ -7,6 +7,7 @@ import com.classmanagement.entity.User;
 import com.classmanagement.service.StudentService;
 import com.classmanagement.util.Md5Util;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class StudentServiceImpl implements StudentService {
         this.studentMapper = studentMapper;
     }
 
+    @Transactional
     @Override
     public Integer addStudent(User user, Student student) {
         Md5Util.md5(user);

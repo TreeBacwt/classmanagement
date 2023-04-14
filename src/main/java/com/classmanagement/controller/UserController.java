@@ -37,13 +37,13 @@ public class UserController {
 
     /*处理账户名重复异常*/
     @ExceptionHandler({DuplicateKeyException.class})
-    protected Result handleDuplicateKeyException(DuplicateKeyException e){
+    protected Result handleDuplicateKeyException(DuplicateKeyException e) {
         logger.error(e.toString());
         return Result.fail("账户名已存在！");
     }
 
     @PostMapping("/login")
-    public Result login(User user){
+    public Result login(User user) {
         User userFromDB = userService.queryUserByAccount(user.getAccount());
         if (userFromDB != null) {
             if (Md5Util.verify(user.getPassword(), userFromDB.getPassword())) {
@@ -53,13 +53,13 @@ public class UserController {
                 u.setAccount(userFromDB.getAccount());
                 u.setRole(userFromDB.getRole());
                 return Result.success("登录成功", u);
-            }else return Result.fail("密码错误");
-        }else return Result.fail("用户名不存在！");
+            } else return Result.fail("密码错误");
+        } else return Result.fail("用户名不存在！");
     }
 
     /*注册学生账号*/
     @PostMapping("/register/stu")
-    public Result registerStudent(Student student, @RequestParam("account") String account){
+    public Result registerStudent(Student student, @RequestParam("account") String account) {
         User user = new User(account, "123456", 2);//密码默认为123456
         Integer userId = studentService.addStudent(user, student);
         return new Result(userId, "用户ID");
@@ -67,7 +67,7 @@ public class UserController {
 
     /*注册家长账号*/
     @PostMapping("/register/par")
-    public Result registerParent(Parent parent, @RequestParam("account") String account){
+    public Result registerParent(Parent parent, @RequestParam("account") String account) {
         Result result = new Result();
         User user = new User(account, "123456", 3);
         parentService.addParent(user, parent);
@@ -79,7 +79,7 @@ public class UserController {
     }
 
     @PutMapping("/upd/psw")
-    public Result updatePassword(@RequestParam("id") Integer id, @RequestParam("oldPassword") String oldPsw, @RequestParam("newPassword") String newPsw){
+    public Result updatePassword(@RequestParam("id") Integer id, @RequestParam("oldPassword") String oldPsw, @RequestParam("newPassword") String newPsw) {
         User userFromDB = userService.queryUserById(id);
         if (userFromDB != null) {
             if (Md5Util.verify(oldPsw, userFromDB.getPassword())) {
@@ -87,17 +87,33 @@ public class UserController {
                 Integer updatePasswordById = userService.updatePasswordById(id, Md5Util.md5(newPsw));
                 if (updatePasswordById == 1) {
                     return Result.success("密码修改成功！");
-                }else return Result.fail("发生错误,请稍后再试！");
-            }else return Result.fail("密码错误");
-        }else return new Result(-1, "没有相关数据，请重新登录！");
+                } else return Result.fail("发生错误,请稍后再试！");
+            } else return Result.fail("密码错误");
+        } else return new Result(-1, "没有相关数据，请重新登录！");
     }
 
     /*分页方式返回user，页面大小为10*/
     @GetMapping("/list/{page}")
-    public Result getUsersByPageSize10(@PathVariable("page") Integer page){
+    public Result getUsersByPageSize10(@PathVariable("page") Integer page) {
         List<User> users = userService.queryUsersLimitIn10(page);
-        if (users.size() != 0){
+        if (users.size() != 0) {
             return Result.success("第" + page + "页查找成功！", users);
-        }else return Result.fail("没有相关数据！");
+        } else return Result.fail("没有相关数据！");
+    }
+
+    @GetMapping("/all")
+    public Result getAllUsers() {
+        List<User> users = userService.queryAllUsers();
+        if (users.size() != 0) {
+            return Result.success("查找成功！", users);
+        } else return Result.fail("没有相关数据！");
+    }
+
+    @DeleteMapping("/delete")
+    public Result deleteUserById(@RequestParam("id") Integer id) {
+        Integer deleteUserById = userService.deleteUserById(id);
+        if (deleteUserById == 1) {
+            return Result.success("删除用户成功！");
+        } else return Result.fail("删除用户失败！");
     }
 }
