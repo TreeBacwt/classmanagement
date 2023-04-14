@@ -48,4 +48,10 @@
         where user_id = #{uid}
     </delete>
 
+    <select id="queryParentByUserId" resultMap="parentMap">
+        select *
+        from parent
+        where user_id = #{uid}
+    </select>
+
 </mapper>

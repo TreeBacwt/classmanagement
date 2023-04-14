@@ -19,4 +19,8 @@ public interface StudentMapper {
     List<Student> queryStudentsLimit(Integer start, Integer limit);
 
     Integer deleteStudentByUserId(Integer uid);
+
+    List<Student> queryAllStudents();
+
+    Student queryStudentByUserId(Integer uid);
 }

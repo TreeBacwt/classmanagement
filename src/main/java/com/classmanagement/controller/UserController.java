@@ -3,6 +3,7 @@ package com.classmanagement.controller;
 import com.classmanagement.entity.Parent;
 import com.classmanagement.entity.Student;
 import com.classmanagement.entity.User;
+import com.classmanagement.entity.UserWithName;
 import com.classmanagement.service.ParentService;
 import com.classmanagement.service.StudentService;
 import com.classmanagement.service.UserService;
@@ -61,21 +62,20 @@ public class UserController {
     @PostMapping("/register/stu")
     public Result registerStudent(Student student, @RequestParam("account") String account) {
         User user = new User(account, "123456", 2);//密码默认为123456
-        Integer userId = studentService.addStudent(user, student);
-        return new Result(userId, "用户ID");
+        Integer addStudent = studentService.addStudent(user, student);
+        if (addStudent != 0) {
+            return Result.success("学生账户添加成功！");
+        } else return Result.fail("添加出错，请稍后再试！");
     }
 
     /*注册家长账号*/
     @PostMapping("/register/par")
     public Result registerParent(Parent parent, @RequestParam("account") String account) {
-        Result result = new Result();
         User user = new User(account, "123456", 3);
-        parentService.addParent(user, parent);
-        result.setCode(Result.SUCCESS);
-        result.setMessage("注册成功");
-        user.setPassword(null);
-        result.setData(user);
-        return result;
+        Integer addParent = parentService.addParent(user, parent);
+        if (addParent != 0) {
+            return Result.success("家长账户添加成功！");
+        } else return Result.fail("添加出错，请稍后再试！");
     }
 
     @PutMapping("/upd/psw")
@@ -103,9 +103,9 @@ public class UserController {
 
     @GetMapping("/all")
     public Result getAllUsers() {
-        List<User> users = userService.queryAllUsers();
-        if (users.size() != 0) {
-            return Result.success("查找成功！", users);
+        List<UserWithName> userWithNames = userService.queryAllUsersWithName();
+        if (userWithNames.size() != 0) {
+            return Result.success("查找成功！", userWithNames);
         } else return Result.fail("没有相关数据！");
     }
 
@@ -115,5 +115,13 @@ public class UserController {
         if (deleteUserById == 1) {
             return Result.success("删除用户成功！");
         } else return Result.fail("删除用户失败！");
+    }
+
+    @GetMapping("/checkAccount/{account}")
+    public Result checkAccountIsDuplicate(@PathVariable("account") String account) {
+        User user = userService.queryUserByAccount(account);
+        if (user != null) {
+            return Result.fail("该账户名已存在！");
+        } else return Result.success("该账户名可用！");
     }
 }

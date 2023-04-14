@@ -19,4 +19,6 @@ public interface ParentMapper {
     List<Parent> queryParentsLimit(Integer start, Integer limit);
 
     Integer deleteParentByUserId(Integer uid);
+
+    Parent queryParentByUserId(Integer uid);
 }

@@ -58,4 +58,9 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.queryStudentsLimit((page - 1) * 10, 10);
     }
 
+    @Override
+    public List<Student> queryAllStudents() {
+        return studentMapper.queryAllStudents();
+    }
+
 }

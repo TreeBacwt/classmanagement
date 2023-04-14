@@ -6,10 +6,12 @@ import com.classmanagement.dao.TeacherMapper;
 import com.classmanagement.dao.UserMapper;
 import com.classmanagement.entity.Teacher;
 import com.classmanagement.entity.User;
+import com.classmanagement.entity.UserWithName;
 import com.classmanagement.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -69,5 +71,21 @@ public class UserServiceImpl implements UserService {
             parentMapper.deleteParentByUserId(id);
         }
         return userMapper.deleteUserById(id);
+    }
+
+    @Override
+    public List<UserWithName> queryAllUsersWithName() {
+        List<User> users = userMapper.queryAllUsers();
+        ArrayList<UserWithName> userWithNames = new ArrayList<>();
+        for (User user : users) {
+            Integer role = user.getRole();
+            if (role == 1) {
+                userWithNames.add(new UserWithName(user, teacherMapper.queryTeacherByUserId(user.getId()).getTeacherName()));
+            } else if (role == 2) {
+                userWithNames.add(new UserWithName(user, studentMapper.queryStudentByUserId(user.getId()).getStudentName()));
+            } else
+                userWithNames.add(new UserWithName(user, parentMapper.queryParentByUserId(user.getId()).getParentName()));
+        }
+        return userWithNames;
     }
 }

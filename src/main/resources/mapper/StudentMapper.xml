@@ -56,4 +56,14 @@
         where user_id = #{uid}
     </delete>
 
+    <select id="queryAllStudents" resultMap="studentMap">
+        select *
+        from student
+    </select>
+    <select id="queryStudentByUserId" resultMap="studentMap">
+        select *
+        from student
+        where user_id = #{uid}
+    </select>
+
 </mapper>

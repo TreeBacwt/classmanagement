@@ -1,6 +1,7 @@
 package com.classmanagement.service;
 
 import com.classmanagement.entity.User;
+import com.classmanagement.entity.UserWithName;
 
 import java.util.List;
 
@@ -12,4 +13,6 @@ public interface UserService {
     User queryUserById(Integer id);
     List<User> queryAllUsers();
     Integer deleteUserById(Integer id);
+    List<UserWithName> queryAllUsersWithName();
+
 }

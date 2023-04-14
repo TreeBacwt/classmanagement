@@ -9,9 +9,15 @@ public interface StudentService {
 
     /*返回userId*/
     Integer addStudent(User user, Student student);
+
     Integer deleteStudentByStudentNum(Integer studentNum);
+
     Integer updateStudent(Student student);
+
     Student queryStudentByStudentNum(Integer studentNum);
+
     List<Student> queryStudentsLimitIn10(Integer page);
+
+    List<Student> queryAllStudents();
 
 }
