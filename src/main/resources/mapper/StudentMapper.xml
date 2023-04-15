@@ -72,4 +72,10 @@
         where user_id = #{uid}
     </select>
 
+    <update id="updateStudentIsLeader">
+        update student
+        set is_leader = #{isLeader}
+        where user_id = #{uid}
+    </update>
+
 </mapper>

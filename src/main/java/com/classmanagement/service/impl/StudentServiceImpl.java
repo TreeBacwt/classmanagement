@@ -68,4 +68,9 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.queryStudentByUserId(uid).getIsLeader();
     }
 
+    @Override
+    public Integer updateStudentIsLeader(Integer uid, Integer isLeader) {
+        return studentMapper.updateStudentIsLeader(uid, isLeader);
+    }
+
 }

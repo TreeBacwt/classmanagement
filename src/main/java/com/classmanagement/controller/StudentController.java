@@ -23,8 +23,8 @@ public class StudentController {
     public Result updateStudent(Student student) {
         Integer updateStudent = studentService.updateStudent(student);
         if (updateStudent == 1) {
-            return Result.success("信息更新成功！");
-        } else return Result.fail("信息更新失败！");
+            return Result.success("学生信息更新成功！");
+        } else return Result.fail("学生信息更新失败！");
     }
 
     @GetMapping("/list/{page}")
@@ -47,5 +47,14 @@ public class StudentController {
     public Result queryStudentIsLeaderByUserId(@PathVariable("uid") Integer uid) {
         Integer isLeader = studentService.queryStudentIsLeaderByUserId(uid);
         return new Result(isLeader, "");
+    }
+
+    @PutMapping("/updateIsLeader")
+    public Result updateStudentIsLeader(Integer uid, Integer isLeader) {
+        Integer updateStudentIsLeader = studentService.updateStudentIsLeader(uid, isLeader);
+        if (updateStudentIsLeader == 1) {
+            String message = isLeader == 1 ? "已成功设为班干部！" : "已成功撤销班干部！";
+            return Result.success(message);
+        } else return Result.fail("更改出错，请稍后再试！");
     }
 }

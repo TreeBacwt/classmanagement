@@ -25,4 +25,6 @@ public interface StudentMapper {
     Student queryStudentByUserId(Integer uid);
 
     Integer queryStudentIsLeaderByUserId(Integer uid);
+
+    Integer updateStudentIsLeader(Integer uid, Integer isLeader);
 }
