@@ -1,15 +1,15 @@
 package com.classmanagement.entity;
 
-public class UserWithName {
+public class UserWithNameVO {
     private Integer id;
     private String account;
     private Integer role;
     private String name;
 
-    public UserWithName() {
+    public UserWithNameVO() {
     }
 
-    public UserWithName(Integer id, String account, Integer role, String name) {
+    public UserWithNameVO(Integer id, String account, Integer role, String name) {
         this.id = id;
         this.account = account;
         this.role = role;
@@ -18,7 +18,7 @@ public class UserWithName {
 
     @Override
     public String toString() {
-        return "UserWithName{" +
+        return "UserWithNameVO{" +
                 "id=" + id +
                 ", account='" + account + '\'' +
                 ", role=" + role +
@@ -58,7 +58,7 @@ public class UserWithName {
         this.name = name;
     }
 
-    public UserWithName(User user, String name) {
+    public UserWithNameVO(User user, String name) {
         this.id = user.getId();
         this.account = user.getAccount();
         this.role = user.getRole();

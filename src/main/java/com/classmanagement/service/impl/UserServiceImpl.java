@@ -6,7 +6,7 @@ import com.classmanagement.dao.TeacherMapper;
 import com.classmanagement.dao.UserMapper;
 import com.classmanagement.entity.Teacher;
 import com.classmanagement.entity.User;
-import com.classmanagement.entity.UserWithName;
+import com.classmanagement.entity.UserWithNameVO;
 import com.classmanagement.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,18 +74,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserWithName> queryAllUsersWithName() {
+    public List<UserWithNameVO> queryAllUsersWithName() {
         List<User> users = userMapper.queryAllUsers();
-        ArrayList<UserWithName> userWithNames = new ArrayList<>();
+        ArrayList<UserWithNameVO> userWithNameVOS = new ArrayList<>();
         for (User user : users) {
             Integer role = user.getRole();
             if (role == 1) {
-                userWithNames.add(new UserWithName(user, teacherMapper.queryTeacherByUserId(user.getId()).getTeacherName()));
+                userWithNameVOS.add(new UserWithNameVO(user, teacherMapper.queryTeacherByUserId(user.getId()).getTeacherName()));
             } else if (role == 2) {
-                userWithNames.add(new UserWithName(user, studentMapper.queryStudentByUserId(user.getId()).getStudentName()));
+                userWithNameVOS.add(new UserWithNameVO(user, studentMapper.queryStudentByUserId(user.getId()).getStudentName()));
             } else
-                userWithNames.add(new UserWithName(user, parentMapper.queryParentByUserId(user.getId()).getParentName()));
+                userWithNameVOS.add(new UserWithNameVO(user, parentMapper.queryParentByUserId(user.getId()).getParentName()));
         }
-        return userWithNames;
+        return userWithNameVOS;
     }
 }

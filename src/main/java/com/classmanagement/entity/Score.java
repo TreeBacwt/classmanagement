@@ -5,12 +5,12 @@ public class Score {
     private Integer subjectId;
     private Integer examinationId;
     private Integer studentNum;
-    private Integer score;
+    private Float score;
 
     public Score() {
     }
 
-    public Score(Integer subjectId, Integer examinationId, Integer studentNum, Integer score) {
+    public Score(Integer subjectId, Integer examinationId, Integer studentNum, Float score) {
         this.subjectId = subjectId;
         this.examinationId = examinationId;
         this.studentNum = studentNum;
@@ -51,11 +51,11 @@ public class Score {
         this.studentNum = studentNum;
     }
 
-    public Integer getScore() {
+    public Float getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(Float score) {
         this.score = score;
     }
 }

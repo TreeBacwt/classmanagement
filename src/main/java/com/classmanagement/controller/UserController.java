@@ -3,7 +3,7 @@ package com.classmanagement.controller;
 import com.classmanagement.entity.Parent;
 import com.classmanagement.entity.Student;
 import com.classmanagement.entity.User;
-import com.classmanagement.entity.UserWithName;
+import com.classmanagement.entity.UserWithNameVO;
 import com.classmanagement.service.ParentService;
 import com.classmanagement.service.StudentService;
 import com.classmanagement.service.UserService;
@@ -103,9 +103,9 @@ public class UserController {
 
     @GetMapping("/all")
     public Result getAllUsers() {
-        List<UserWithName> userWithNames = userService.queryAllUsersWithName();
-        if (userWithNames.size() != 0) {
-            return Result.success("查找成功！", userWithNames);
+        List<UserWithNameVO> userWithNameVOS = userService.queryAllUsersWithName();
+        if (userWithNameVOS.size() != 0) {
+            return Result.success("查找成功！", userWithNameVOS);
         } else return Result.fail("没有相关数据！");
     }
 

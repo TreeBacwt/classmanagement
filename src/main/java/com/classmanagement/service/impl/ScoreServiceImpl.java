@@ -1,19 +1,25 @@
 package com.classmanagement.service.impl;
 
 import com.classmanagement.dao.ScoreMapper;
+import com.classmanagement.dao.StudentMapper;
 import com.classmanagement.entity.Score;
+import com.classmanagement.entity.ScoresVO;
+import com.classmanagement.entity.Student;
 import com.classmanagement.service.ScoreService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ScoreServiceImpl implements ScoreService {
 
     final ScoreMapper scoreMapper;
+    final StudentMapper studentMapper;
 
-    public ScoreServiceImpl(ScoreMapper scoreMapper) {
+    public ScoreServiceImpl(ScoreMapper scoreMapper, StudentMapper studentMapper) {
         this.scoreMapper = scoreMapper;
+        this.studentMapper = studentMapper;
     }
 
     @Override
@@ -49,6 +55,20 @@ public class ScoreServiceImpl implements ScoreService {
     @Override
     public Integer insertScores(List<Score> scores) {
         return scoreMapper.insertScores(scores);
+    }
+
+    @Override
+    public List<ScoresVO> queryScoresOfExamination(Integer examinationId) {
+        List<Student> students = studentMapper.queryAllStudents();
+        List<ScoresVO> scoresVOS = new ArrayList<>();
+        for (Student student : students) {
+            Score english = scoreMapper.queryScoreBySubjectIdAndExaminationIdAndStudentNum(1, examinationId, student.getStudentNum());
+            Score math = scoreMapper.queryScoreBySubjectIdAndExaminationIdAndStudentNum(2, examinationId, student.getStudentNum());
+            Score computer = scoreMapper.queryScoreBySubjectIdAndExaminationIdAndStudentNum(3, examinationId, student.getStudentNum());
+            Score chinese = scoreMapper.queryScoreBySubjectIdAndExaminationIdAndStudentNum(4, examinationId, student.getStudentNum());
+            scoresVOS.add(new ScoresVO(student.getStudentName(), english.getScore(), math.getScore(), chinese.getScore(), computer.getScore()));
+        }
+        return scoresVOS;
     }
 
 }

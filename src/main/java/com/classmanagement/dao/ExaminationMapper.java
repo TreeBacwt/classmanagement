@@ -9,9 +9,14 @@ import java.util.List;
 public interface ExaminationMapper {
 
     Integer insertExamination(Examination examination);
+
     Examination queryExaminationById(Integer id);
+
     Integer updateExamination(Examination examination);
+
     Integer deleteExaminationById(Integer id);
+
     List<Examination> queryExaminationLimit(Integer start, Integer limit);
 
+    Integer queryExaminationsCount();
 }
