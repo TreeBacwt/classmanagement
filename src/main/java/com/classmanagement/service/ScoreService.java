@@ -23,4 +23,5 @@ public interface ScoreService {
 
     List<ScoresVO> queryScoresOfExamination(Integer examinationId);
 
+    Integer updateScores(List<Score> scores);
 }

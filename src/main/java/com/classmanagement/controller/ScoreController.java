@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/score")
 public class ScoreController {
@@ -76,11 +77,18 @@ public class ScoreController {
 
     @GetMapping("/getScoresOfExam/{examId}")
     public Result getScoresOfExamination(@PathVariable Integer examId) {
-        //todo 待测试
-        List<ScoresVO> scoresVOS = scoreService.queryScoresOfExamination(examId);
-        if (scoresVOS.size() != 0) {
-            return Result.success("本次考试成绩查询成功！", scoresVOS);
+        List<ScoresVO> scoresVO = scoreService.queryScoresOfExamination(examId);
+        if (scoresVO.size() != 0) {
+            return Result.success("本次考试成绩查询成功！", scoresVO);
         } else return Result.fail("本次考试成绩暂无数据！");
+    }
+
+    @PutMapping("/updMulti")
+    public Result updateMultiScores(@RequestBody List<Score> scores){
+        Integer updateScores = scoreService.updateScores(scores);
+        if (updateScores!=0) {
+            return Result.success("编辑分数成功！");
+        }else return Result.fail("编辑分数失败！");
     }
 
 }

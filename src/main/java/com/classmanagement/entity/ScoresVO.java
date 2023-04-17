@@ -3,20 +3,37 @@ package com.classmanagement.entity;
 public class ScoresVO {
 
     private String studentName;
+    private Integer studentNum;
     private Float english;
     private Float math;
     private Float chinese;
     private Float computer;
+    private Integer isEdit;
 
-    @Override
-    public String toString() {
-        return "ScoresVO{" +
-                "studentName='" + studentName + '\'' +
-                ", english=" + english +
-                ", math=" + math +
-                ", chinese=" + chinese +
-                ", computer=" + computer +
-                '}';
+    public Integer getIsEdit() {
+        return isEdit;
+    }
+
+    public void setIsEdit(Integer isEdit) {
+        this.isEdit = isEdit;
+    }
+
+    public Integer getStudentNum() {
+        return studentNum;
+    }
+
+    public void setStudentNum(Integer studentNum) {
+        this.studentNum = studentNum;
+    }
+
+    public ScoresVO(String studentName, Integer studentNum, Float english, Float math, Float chinese, Float computer) {
+        this.studentName = studentName;
+        this.studentNum = studentNum;
+        this.english = english;
+        this.math = math;
+        this.chinese = chinese;
+        this.computer = computer;
+        this.isEdit = 0;
     }
 
     public String getStudentName() {
@@ -51,6 +68,19 @@ public class ScoresVO {
         this.chinese = chinese;
     }
 
+    @Override
+    public String toString() {
+        return "ScoresVO{" +
+                "studentName='" + studentName + '\'' +
+                ", studentNum=" + studentNum +
+                ", english=" + english +
+                ", math=" + math +
+                ", chinese=" + chinese +
+                ", computer=" + computer +
+                ", isEdit=" + isEdit +
+                '}';
+    }
+
     public Float getComputer() {
         return computer;
     }
@@ -65,8 +95,10 @@ public class ScoresVO {
         this.math = math;
         this.chinese = chinese;
         this.computer = computer;
+        this.isEdit = 0;
     }
 
     public ScoresVO() {
+        this.isEdit = 0;
     }
 }

@@ -7,6 +7,7 @@ import com.classmanagement.entity.ScoresVO;
 import com.classmanagement.entity.Student;
 import com.classmanagement.service.ScoreService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,9 +67,19 @@ public class ScoreServiceImpl implements ScoreService {
             Score math = scoreMapper.queryScoreBySubjectIdAndExaminationIdAndStudentNum(2, examinationId, student.getStudentNum());
             Score computer = scoreMapper.queryScoreBySubjectIdAndExaminationIdAndStudentNum(3, examinationId, student.getStudentNum());
             Score chinese = scoreMapper.queryScoreBySubjectIdAndExaminationIdAndStudentNum(4, examinationId, student.getStudentNum());
-            scoresVOS.add(new ScoresVO(student.getStudentName(), english.getScore(), math.getScore(), chinese.getScore(), computer.getScore()));
+            scoresVOS.add(new ScoresVO(student.getStudentName(), student.getStudentNum(), english != null ? english.getScore() : -1, math != null ? math.getScore() : -1, chinese != null ? chinese.getScore() : -1, computer != null ? computer.getScore() : -1));
         }
         return scoresVOS;
+    }
+
+    @Transactional
+    @Override
+    public Integer updateScores(List<Score> scores) {
+        Integer result = 1;
+        for (Score score : scores) {
+            result *= scoreMapper.updateScore(score);
+        }
+        return result;
     }
 
 }
