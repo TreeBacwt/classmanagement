@@ -74,7 +74,7 @@ public class ExaminationController {
     public Result addExaminationWithScores(@RequestBody ExaminationWithScoresVO examination) {
         Integer addExaminationWithScores = examinationService.addExaminationWithScores(examination);
         if (addExaminationWithScores == 1) {
-            return Result.success("考试成绩录入成功！");
+            return Result.success("考试成绩录入成功！", examination.getExamination().getId());
         } else return Result.fail("出错了，请稍后再试！");
     }
 }
