@@ -9,10 +9,17 @@ import java.util.List;
 public interface SubjectMapper {
 
     Integer insertSubject(Subject subject);
+
     Subject querySubjectById(Integer id);
+
     Integer updateSubject(Subject subject);
+
     Integer deleteSubjectById(Integer id);
+
     List<Subject> querySubjectsLimit(Integer start, Integer limit);
+
     Integer insertSubjects(List<Subject> subjects);
+
+    List<Subject> queryAllSubjects();
 
 }

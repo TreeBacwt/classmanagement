@@ -34,15 +34,19 @@
 
     <select id="querySubjectsLimit" resultMap="subjectMap">
         select *
-        from subject
-        limit #{start}, #{limit}
+        from subject limit #{start}, #{limit}
     </select>
 
     <insert id="insertSubjects" parameterType="subject">
-        insert into subject (subject_name) values 
-            <foreach collection="list" item="subject" separator=",">
-                (#{subject.subjectName})
-            </foreach>
+        insert into subject (subject_name) values
+        <foreach collection="list" item="subject" separator=",">
+            (#{subject.subjectName})
+        </foreach>
     </insert>
+
+    <select id="queryAllSubjects" resultMap="subjectMap">
+        select *
+        from subject
+    </select>
 
 </mapper>

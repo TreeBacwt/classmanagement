@@ -2,14 +2,17 @@ package com.classmanagement.service.impl;
 
 import com.classmanagement.dao.ScoreMapper;
 import com.classmanagement.dao.StudentMapper;
+import com.classmanagement.dao.SubjectMapper;
 import com.classmanagement.entity.Score;
 import com.classmanagement.entity.ScoresVO;
 import com.classmanagement.entity.Student;
+import com.classmanagement.entity.Subject;
 import com.classmanagement.service.ScoreService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -17,10 +20,12 @@ public class ScoreServiceImpl implements ScoreService {
 
     final ScoreMapper scoreMapper;
     final StudentMapper studentMapper;
+    final SubjectMapper subjectMapper;
 
-    public ScoreServiceImpl(ScoreMapper scoreMapper, StudentMapper studentMapper) {
+    public ScoreServiceImpl(ScoreMapper scoreMapper, StudentMapper studentMapper, SubjectMapper subjectMapper) {
         this.scoreMapper = scoreMapper;
         this.studentMapper = studentMapper;
+        this.subjectMapper = subjectMapper;
     }
 
     @Override
@@ -61,13 +66,20 @@ public class ScoreServiceImpl implements ScoreService {
     @Override
     public List<ScoresVO> queryScoresOfExamination(Integer examinationId) {
         List<Student> students = studentMapper.queryAllStudents();
+        List<Subject> subjects = subjectMapper.queryAllSubjects();
         List<ScoresVO> scoresVOS = new ArrayList<>();
         for (Student student : students) {
-            Score english = scoreMapper.queryScoreBySubjectIdAndExaminationIdAndStudentNum(1, examinationId, student.getStudentNum());
-            Score math = scoreMapper.queryScoreBySubjectIdAndExaminationIdAndStudentNum(2, examinationId, student.getStudentNum());
-            Score computer = scoreMapper.queryScoreBySubjectIdAndExaminationIdAndStudentNum(3, examinationId, student.getStudentNum());
-            Score chinese = scoreMapper.queryScoreBySubjectIdAndExaminationIdAndStudentNum(4, examinationId, student.getStudentNum());
-            scoresVOS.add(new ScoresVO(student.getStudentName(), student.getStudentNum(), english != null ? english.getScore() : -1, math != null ? math.getScore() : -1, chinese != null ? chinese.getScore() : -1, computer != null ? computer.getScore() : -1));
+            Integer studentNum = student.getStudentNum();
+            HashMap<String, Float> scores = new HashMap<>();
+            for (Subject subject : subjects) {
+                Integer subjectId = subject.getId();
+                Score score = scoreMapper.queryScoreBySubjectIdAndExaminationIdAndStudentNum(subjectId, examinationId, studentNum);
+                if (score != null) {
+                    scores.put(subjectId.toString(), score.getScore());
+                } else scores.put(subjectId.toString(), (float) -1);//无数据就为-1
+            }
+            ScoresVO scoresVO = new ScoresVO(student.getStudentName(), studentNum, 0, scores);
+            scoresVOS.add(scoresVO);
         }
         return scoresVOS;
     }

@@ -45,4 +45,9 @@ public class SubjectServiceImpl implements SubjectService {
     public Integer insertSubjects(List<Subject> subjects) {
         return subjectMapper.insertSubjects(subjects);
     }
+
+    @Override
+    public List<Subject> queryAllSubjects() {
+        return subjectMapper.queryAllSubjects();
+    }
 }

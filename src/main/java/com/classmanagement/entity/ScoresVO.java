@@ -1,39 +1,22 @@
 package com.classmanagement.entity;
 
+import java.util.HashMap;
+
 public class ScoresVO {
 
     private String studentName;
     private Integer studentNum;
-    private Float english;
-    private Float math;
-    private Float chinese;
-    private Float computer;
     private Integer isEdit;
+    private HashMap<String, Float> scores;
 
-    public Integer getIsEdit() {
-        return isEdit;
-    }
-
-    public void setIsEdit(Integer isEdit) {
-        this.isEdit = isEdit;
-    }
-
-    public Integer getStudentNum() {
-        return studentNum;
-    }
-
-    public void setStudentNum(Integer studentNum) {
-        this.studentNum = studentNum;
-    }
-
-    public ScoresVO(String studentName, Integer studentNum, Float english, Float math, Float chinese, Float computer) {
-        this.studentName = studentName;
-        this.studentNum = studentNum;
-        this.english = english;
-        this.math = math;
-        this.chinese = chinese;
-        this.computer = computer;
-        this.isEdit = 0;
+    @Override
+    public String toString() {
+        return "ScoresVO{" +
+                "studentName='" + studentName + '\'' +
+                ", studentNum=" + studentNum +
+                ", isEdit=" + isEdit +
+                ", scores=" + scores +
+                '}';
     }
 
     public String getStudentName() {
@@ -44,61 +27,37 @@ public class ScoresVO {
         this.studentName = studentName;
     }
 
-    public Float getEnglish() {
-        return english;
+    public Integer getStudentNum() {
+        return studentNum;
     }
 
-    public void setEnglish(Float english) {
-        this.english = english;
+    public void setStudentNum(Integer studentNum) {
+        this.studentNum = studentNum;
     }
 
-    public Float getMath() {
-        return math;
+    public Integer getIsEdit() {
+        return isEdit;
     }
 
-    public void setMath(Float math) {
-        this.math = math;
+    public void setIsEdit(Integer isEdit) {
+        this.isEdit = isEdit;
     }
 
-    public Float getChinese() {
-        return chinese;
+    public HashMap<String, Float> getScores() {
+        return scores;
     }
 
-    public void setChinese(Float chinese) {
-        this.chinese = chinese;
+    public void setScores(HashMap<String, Float> scores) {
+        this.scores = scores;
     }
 
-    @Override
-    public String toString() {
-        return "ScoresVO{" +
-                "studentName='" + studentName + '\'' +
-                ", studentNum=" + studentNum +
-                ", english=" + english +
-                ", math=" + math +
-                ", chinese=" + chinese +
-                ", computer=" + computer +
-                ", isEdit=" + isEdit +
-                '}';
-    }
-
-    public Float getComputer() {
-        return computer;
-    }
-
-    public void setComputer(Float computer) {
-        this.computer = computer;
-    }
-
-    public ScoresVO(String studentName, Float english, Float math, Float chinese, Float computer) {
+    public ScoresVO(String studentName, Integer studentNum, Integer isEdit, HashMap<String, Float> scores) {
         this.studentName = studentName;
-        this.english = english;
-        this.math = math;
-        this.chinese = chinese;
-        this.computer = computer;
-        this.isEdit = 0;
+        this.studentNum = studentNum;
+        this.isEdit = isEdit;
+        this.scores = scores;
     }
 
     public ScoresVO() {
-        this.isEdit = 0;
     }
 }

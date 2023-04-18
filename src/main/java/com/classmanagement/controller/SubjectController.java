@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/subject")
 public class SubjectController {
@@ -63,5 +64,15 @@ public class SubjectController {
         if (insertSubjects != 0) {
             return Result.success("批量添加课程成功！");
         } else return Result.fail("批量添加课程失败！");
+    }
+
+    @GetMapping("/all")
+    public Result queryAllSubjects() {
+        List<Subject> subjects = subjectService.queryAllSubjects();
+        if (subjects.size() != 0) {
+            return Result.success("课程信息查询成功！", subjects);
+        } else {
+            return Result.fail("暂无课程数据！");
+        }
     }
 }
