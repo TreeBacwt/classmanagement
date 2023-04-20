@@ -9,8 +9,12 @@ import java.util.List;
 public interface QuestionnaireMapper {
 
     Integer insertQuestionnaire(Questionnaire questionnaire);
+
     Questionnaire queryQuestionnaireById(Integer id);
+
     Integer updateQuestionnaire(Questionnaire questionnaire);
+
     Integer deleteQuestionnaireById(Integer id);
+
     List<Questionnaire> queryQuestionnairesLimit(Integer start, Integer limit);
 }

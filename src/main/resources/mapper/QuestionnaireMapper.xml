@@ -15,8 +15,8 @@
     </resultMap>
 
     <insert id="insertQuestionnaire" parameterType="questionnaire" useGeneratedKeys="true" keyProperty="id">
-        insert into questionnaire (questionnaire_name, questionnaire_date, information, respondent, is_over, keep_time)
-        values (#{questionnaireName}, #{questionnaireDate}, #{information}, #{respondent}, #{isOver},#{keepTime})
+        insert into questionnaire (questionnaire_name, questionnaire_date, information, respondent, is_over, over_date)
+        values (#{questionnaireName}, #{questionnaireDate}, #{information}, #{respondent}, #{isOver},#{overDate})
     </insert>
 
     <select id="queryQuestionnaireById" resultMap="questionnaireMap">
@@ -33,7 +33,7 @@
             information = #{information},
             respondent = #{respondent},
             is_over = #{isOver},
-            keep_time = #{keepTime}
+            over_date = #{overDate}
         where id = #{id}
     </update>
 

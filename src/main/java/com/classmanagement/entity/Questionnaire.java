@@ -10,7 +10,7 @@ public class Questionnaire {
     private String information;
     private Integer respondent;
     private Integer isOver;
-    private Integer keepTime;
+    private Date overDate;
 
     @Override
     public String toString() {
@@ -21,7 +21,7 @@ public class Questionnaire {
                 ", information='" + information + '\'' +
                 ", respondent=" + respondent +
                 ", isOver=" + isOver +
-                ", keepTime=" + keepTime +
+                ", overDate=" + overDate +
                 '}';
     }
 
@@ -73,31 +73,31 @@ public class Questionnaire {
         this.isOver = isOver;
     }
 
-    public Integer getKeepTime() {
-        return keepTime;
+    public Date getKeepTime() {
+        return overDate;
     }
 
-    public void setKeepTime(Integer keepTime) {
-        this.keepTime = keepTime;
+    public void setOverDate(Date overDate) {
+        this.overDate = overDate;
     }
 
-    public Questionnaire(String questionnaireName, Date questionnaireDate, String information, Integer respondent, Integer isOver, Integer keepTime) {
+    public Questionnaire(String questionnaireName, Date questionnaireDate, String information, Integer respondent, Integer isOver, Date overDate) {
         this.questionnaireName = questionnaireName;
         this.questionnaireDate = questionnaireDate;
         this.information = information;
         this.respondent = respondent;
         this.isOver = isOver;
-        this.keepTime = keepTime;
+        this.overDate = overDate;
     }
 
-    public Questionnaire(Integer id, String questionnaireName, Date questionnaireDate, String information, Integer respondent, Integer isOver, Integer keepTime) {
+    public Questionnaire(Integer id, String questionnaireName, Date questionnaireDate, String information, Integer respondent, Integer isOver, Date overDate) {
         this.id = id;
         this.questionnaireName = questionnaireName;
         this.questionnaireDate = questionnaireDate;
         this.information = information;
         this.respondent = respondent;
         this.isOver = isOver;
-        this.keepTime = keepTime;
+        this.overDate = overDate;
     }
 
     public Questionnaire() {
