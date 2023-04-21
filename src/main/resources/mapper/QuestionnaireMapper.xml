@@ -47,4 +47,13 @@
         from questionnaire limit #{start}, #{limit}
     </select>
 
+    <select id="queryAllQuestionnaires" resultMap="questionnaireMap">
+        select *
+        from questionnaire
+    </select>
+
+    <select id="getTotal" resultType="int">
+        select count(*)
+        from questionnaire;
+    </select>
 </mapper>

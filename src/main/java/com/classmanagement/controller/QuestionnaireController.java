@@ -1,11 +1,16 @@
 package com.classmanagement.controller;
 
+import com.classmanagement.entity.Parent;
+import com.classmanagement.entity.ParentQuestionnaire;
 import com.classmanagement.entity.Questionnaire;
 import com.classmanagement.entity.QuestionnaireWithQuestionsAndOptionsVO;
+import com.classmanagement.service.ParentQuestionnaireService;
+import com.classmanagement.service.ParentService;
 import com.classmanagement.service.QuestionnaireService;
 import com.classmanagement.util.Result;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
@@ -14,9 +19,13 @@ import java.util.List;
 public class QuestionnaireController {
 
     final QuestionnaireService questionnaireService;
+    final ParentQuestionnaireService parentQuestionnaireService;
+    final ParentService parentService;
 
-    public QuestionnaireController(QuestionnaireService questionnaireService) {
+    public QuestionnaireController(QuestionnaireService questionnaireService, ParentQuestionnaireService parentQuestionnaireService, ParentService parentService) {
         this.questionnaireService = questionnaireService;
+        this.parentQuestionnaireService = parentQuestionnaireService;
+        this.parentService = parentService;
     }
 
     @PostMapping("/add")
@@ -73,5 +82,45 @@ public class QuestionnaireController {
         if (questionnaireWithQuestionsAndOptionsVO != null) {
             return Result.success("问卷查询成功！", questionnaireWithQuestionsAndOptionsVO);
         } else return Result.fail("问卷查询失败！");
+    }
+
+    @GetMapping("/getQuestionnairesByParentId/{pid}")
+    public Result getUnDoneQuestionnairesByParentId(@PathVariable("pid") Integer pid) {
+        Parent parent = parentService.queryParentById(pid);
+        if (parent == null) {
+            return Result.fail("家长数据不存在！");
+        }
+        //已完成的调查问卷
+        List<ParentQuestionnaire> parentQuestionnaires = parentQuestionnaireService.queryParentQuestionnaireByParentId(pid);
+        //所有问卷
+        List<Questionnaire> questionnaires = questionnaireService.queryAllQuestionnaires();
+
+        List<Questionnaire> questionnaireList = new ArrayList<>();
+        if (parentQuestionnaires.size() != 0) {
+            if (questionnaires.size() != 0) {
+                for (Questionnaire questionnaire : questionnaires) {
+                    for (ParentQuestionnaire parentQuestionnaire : parentQuestionnaires) {
+                        //不在完成问卷列表中
+                        if (questionnaire.getId() != parentQuestionnaire.getQuestionnaireId()) {
+                            questionnaireList.add(questionnaire);
+                        }
+                    }
+                }
+                if (questionnaireList.size() != 0) {
+                    return Result.success("问卷信息查询成功！", questionnaireList);
+                } else return Result.fail("暂无未完成问卷！");
+            } else return Result.fail("出错了！");//不存在这种情况
+        } else {
+            if (questionnaires.size() != 0) {
+                return Result.success("问卷信息查询成功！", questionnaires);
+            } else return Result.fail("暂无未完成问卷！");
+        }
+
+    }
+
+    @GetMapping("/getTotal")
+    public Result getTotal() {
+        Integer total = questionnaireService.getTotal();
+        return Result.success("总数查询成功！", total);
     }
 }

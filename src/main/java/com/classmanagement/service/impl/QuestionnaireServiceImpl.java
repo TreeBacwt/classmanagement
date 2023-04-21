@@ -108,4 +108,14 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         return null;
     }
 
+    @Override
+    public List<Questionnaire> queryAllQuestionnaires() {
+        return questionnaireMapper.queryAllQuestionnaires();
+    }
+
+    @Override
+    public Integer getTotal() {
+        return questionnaireMapper.getTotal();
+    }
+
 }

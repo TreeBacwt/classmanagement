@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.classmanagement.dao.ParentQuestionnaireMapper">
+    <resultMap id="parentQuestionnaireMap" type="parentQuestionnaire">
+        <result column="parent_id" property="parentId"/>
+        <result column="questionnaire_id" property="questionnaireId"/>
+        <result column="is_done" property="isDone"/>
+    </resultMap>
+
+    <insert id="insertParentQuestionnaire" parameterType="parentQuestionnaire">
+        insert into parent_questionnaire (parent_id, questionnaire_id, is_done)
+        values (#{parentId}, #{questionnaireId}, #{isDone})
+    </insert>
+
+    <delete id="deleteParentQuestionnaireByParentIdAndQuestionnaireId">
+        delete
+        from parent_questionnaire
+        where parent_id = #{pid}
+          and questionnaire_id = #{qid}
+    </delete>
+
+    <select id="queryParentQuestionnaireByParentId" resultMap="parentQuestionnaireMap">
+        select *
+        from parent_questionnaire
+        where parent_id = #{pid}
+    </select>
+
+    <select id="queryParentQuestionnaireByParentIdLimit" resultMap="parentQuestionnaireMap">
+        select *
+        from parent_questionnaire
+        where parent_id = #{pid}
+        limit #{start}, #{limit}
+    </select>
+
+    <update id="updateParentQuestionnaire" parameterType="parentQuestionnaire">
+        update parent_questionnaire
+        set is_done = #{isDone}
+        where parent_id = #{parentId}
+          and questionnaire_id = #{questionnaireId}
+    </update>
+</mapper>

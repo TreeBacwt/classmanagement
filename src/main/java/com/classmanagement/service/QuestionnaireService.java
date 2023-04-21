@@ -21,4 +21,8 @@ public interface QuestionnaireService {
 
     QuestionnaireWithQuestionsAndOptionsVO queryQuestionnaireWithQuestionsAndOptionsById(Integer id);
 
+    List<Questionnaire> queryAllQuestionnaires();
+
+    Integer getTotal();
+
 }

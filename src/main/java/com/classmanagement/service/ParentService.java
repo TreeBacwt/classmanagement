@@ -13,4 +13,6 @@ public interface ParentService {
     Integer updateParent(Parent parent);
     Parent queryParentById(Integer id);
     List<Parent> queryParentsLimitIn10(Integer page);
+
+    Parent queryParentByUserId(Integer uid);
 }

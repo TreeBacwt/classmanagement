@@ -57,4 +57,9 @@ public class ParentServiceImpl implements ParentService {
     public List<Parent> queryParentsLimitIn10(Integer page) {
         return parentMapper.queryParentsLimit((page - 1) * 10, 10);
     }
+
+    @Override
+    public Parent queryParentByUserId(Integer uid) {
+        return parentMapper.queryParentByUserId(uid);
+    }
 }

@@ -17,4 +17,8 @@ public interface QuestionnaireMapper {
     Integer deleteQuestionnaireById(Integer id);
 
     List<Questionnaire> queryQuestionnairesLimit(Integer start, Integer limit);
+
+    List<Questionnaire> queryAllQuestionnaires();
+
+    Integer getTotal();
 }
