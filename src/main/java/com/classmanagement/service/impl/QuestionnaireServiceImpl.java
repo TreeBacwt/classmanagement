@@ -8,6 +8,8 @@ import com.classmanagement.service.QuestionnaireService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -45,7 +47,14 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
     @Override
     public List<Questionnaire> queryQuestionnairesLimitIn10(Integer page) {
-        return questionnaireMapper.queryQuestionnairesLimit((page - 1) * 10, 10);
+        List<Questionnaire> questionnaires = questionnaireMapper.queryQuestionnairesLimit((page - 1) * 10, 10);
+        Date nowTime = new Date();
+        for (Questionnaire questionnaire : questionnaires) {
+            if (questionnaire.getOverDate().compareTo(nowTime) < 0) {
+                questionnaire.setIsOver(1);
+            }
+        }
+        return questionnaires;
     }
 
     @Transactional
@@ -76,6 +85,27 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
             }
         } else result = 0;
         return result;
+    }
+
+    @Override
+    public QuestionnaireWithQuestionsAndOptionsVO queryQuestionnaireWithQuestionsAndOptionsById(Integer id) {
+        Questionnaire questionnaire = questionnaireMapper.queryQuestionnaireById(id);
+        if (questionnaire != null) {
+            //查找问卷题目
+            List<Question> questions = questionMapper.queryQuestionsByQuestionnaireId(id);
+            if (questions.size() != 0) {
+                List<QuestionWithOptionsVO> questionWithOptionsVOS = new ArrayList<>();
+                for (Question question : questions) {
+                    //查找题目选项
+                    List<QuestionOption> questionOptions = questionOptionMapper.queryQuestionOptionByQuestionId(question.getId());
+                    QuestionWithOptionsVO questionWithOptionsVO = new QuestionWithOptionsVO(question, questionOptions);
+                    questionWithOptionsVOS.add(questionWithOptionsVO);
+                }
+                return new QuestionnaireWithQuestionsAndOptionsVO(questionnaire, questionWithOptionsVOS);
+            }
+
+        }
+        return null;
     }
 
 }

@@ -67,4 +67,11 @@ public class QuestionnaireController {
         } else return Result.fail("添加调查问卷失败！");
     }
 
+    @GetMapping("/getQuestionnaireWithQuestionsAndOptionsById/{id}")
+    public Result getQuestionnaireWithQuestionsAndOptionsById(@PathVariable Integer id) {
+        QuestionnaireWithQuestionsAndOptionsVO questionnaireWithQuestionsAndOptionsVO = questionnaireService.queryQuestionnaireWithQuestionsAndOptionsById(id);
+        if (questionnaireWithQuestionsAndOptionsVO != null) {
+            return Result.success("问卷查询成功！", questionnaireWithQuestionsAndOptionsVO);
+        } else return Result.fail("问卷查询失败！");
+    }
 }

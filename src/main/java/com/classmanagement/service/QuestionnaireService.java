@@ -19,4 +19,6 @@ public interface QuestionnaireService {
 
     Integer addQuestionnaireWithQuestionsAndOptions(QuestionnaireWithQuestionsAndOptionsVO questionnaireWithQuestionsAndOptionsVO);
 
+    QuestionnaireWithQuestionsAndOptionsVO queryQuestionnaireWithQuestionsAndOptionsById(Integer id);
+
 }
