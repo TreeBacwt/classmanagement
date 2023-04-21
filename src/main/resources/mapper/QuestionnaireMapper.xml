@@ -11,12 +11,12 @@
         <result column="information" property="information"/>
         <result column="respondent" property="respondent"/>
         <result column="is_over" property="isOver"/>
-        <result column="keep_time" property="keepTime"/>
+        <result column="over_date" property="overDate"/>
     </resultMap>
 
     <insert id="insertQuestionnaire" parameterType="questionnaire" useGeneratedKeys="true" keyProperty="id">
         insert into questionnaire (questionnaire_name, questionnaire_date, information, respondent, is_over, over_date)
-        values (#{questionnaireName}, #{questionnaireDate}, #{information}, #{respondent}, #{isOver},#{overDate})
+        values (#{questionnaireName}, #{questionnaireDate}, #{information}, #{respondent}, #{isOver}, #{overDate})
     </insert>
 
     <select id="queryQuestionnaireById" resultMap="questionnaireMap">
@@ -27,13 +27,12 @@
 
     <update id="updateQuestionnaire" parameterType="questionnaire">
         update questionnaire
-        set
-            questionnaire_name = #{questionnaireName},
+        set questionnaire_name = #{questionnaireName},
             questionnaire_date = #{questionnaireDate},
-            information = #{information},
-            respondent = #{respondent},
-            is_over = #{isOver},
-            over_date = #{overDate}
+            information        = #{information},
+            respondent         = #{respondent},
+            is_over            = #{isOver},
+            over_date          = #{overDate}
         where id = #{id}
     </update>
 
@@ -45,8 +44,7 @@
 
     <select id="queryQuestionnairesLimit" resultMap="questionnaireMap">
         select *
-        from questionnaire
-        limit #{start}, #{limit}
+        from questionnaire limit #{start}, #{limit}
     </select>
 
 </mapper>

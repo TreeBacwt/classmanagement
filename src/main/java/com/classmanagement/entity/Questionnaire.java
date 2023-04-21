@@ -73,7 +73,7 @@ public class Questionnaire {
         this.isOver = isOver;
     }
 
-    public Date getKeepTime() {
+    public Date getOverDate() {
         return overDate;
     }
 
