@@ -9,15 +9,15 @@
         <result column="vote_name" property="voteName"/>
         <result column="information" property="information"/>
         <result column="vote_date" property="voteDate"/>
-        <result column="keep_time" property="keepTime"/>
+        <result column="over_date" property="overDate"/>
         <result column="is_over" property="isOver"/>
         <result column="participant" property="participant"/>
         <result column="options_number" property="optionsNumber"/>
     </resultMap>
 
     <insert id="insertVote" parameterType="vote" useGeneratedKeys="true" keyProperty="id">
-        insert into vote (vote_name, information, vote_date, keep_time, is_over, participant, options_number)
-        values (#{voteName}, #{information}, #{voteDate}, #{keepTime}, #{isOver}, #{participant}, #{optionsNumber})
+        insert into vote (vote_name, information, vote_date, over_date, is_over, participant, options_number)
+        values (#{voteName}, #{information}, #{voteDate}, #{overDate}, #{isOver}, #{participant}, #{optionsNumber})
     </insert>
 
     <select id="queryVoteById" resultMap="voteMap">
@@ -28,14 +28,13 @@
 
     <update id="updateVote" parameterType="vote">
         update vote
-        set
-        vote_name = #{voteName},
-        information = #{information},
-        vote_date = #{voteDate},
-        keep_time = #{keepTime},
-        is_over = #{isOver},
-        participant = #{participant},
-        options_number = #{optionsNumber}
+        set vote_name      = #{voteName},
+            information    = #{information},
+            vote_date      = #{voteDate},
+            over_date      = #{overDate},
+            is_over        = #{isOver},
+            participant    = #{participant},
+            options_number = #{optionsNumber}
         where id = #{id}
     </update>
 
@@ -47,8 +46,7 @@
 
     <select id="queryVotesLimit" resultMap="voteMap">
         select *
-        from vote
-        limit #{start}, #{limit}
+        from vote limit #{start}, #{limit}
     </select>
 
 </mapper>
