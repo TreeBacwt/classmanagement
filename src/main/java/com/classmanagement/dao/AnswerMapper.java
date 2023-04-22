@@ -9,6 +9,9 @@ import java.util.List;
 public interface AnswerMapper {
 
     Integer insertAnswer(Answer answer);
+
     List<Answer> queryAnswerByQuestionId(Integer questionId);
+
+    List<Answer> queryAnswersByQuestionOptionId(Integer questionOptionId);
 
 }

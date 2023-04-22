@@ -1,16 +1,13 @@
 package com.classmanagement.service.impl;
 
 import com.classmanagement.dao.AnswerMapper;
-import com.classmanagement.entity.Answer;
-import com.classmanagement.entity.ParentQuestionnaire;
-import com.classmanagement.entity.Questionnaire;
-import com.classmanagement.service.AnswerService;
-import com.classmanagement.service.ParentQuestionnaireService;
-import com.classmanagement.service.QuestionService;
-import com.classmanagement.service.QuestionnaireService;
+import com.classmanagement.entity.*;
+import com.classmanagement.service.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -20,12 +17,16 @@ public class AnswerServiceImpl implements AnswerService {
     final ParentQuestionnaireService parentQuestionnaireService;
     final QuestionService questionService;
     final QuestionnaireService questionnaireService;
+    final QuestionOptionService questionOptionService;
+    final ParentService parentService;
 
-    public AnswerServiceImpl(AnswerMapper answerMapper, ParentQuestionnaireService parentQuestionnaireService, QuestionService questionService, QuestionnaireService questionnaireService) {
+    public AnswerServiceImpl(AnswerMapper answerMapper, ParentQuestionnaireService parentQuestionnaireService, QuestionService questionService, QuestionnaireService questionnaireService, QuestionOptionService questionOptionService, ParentService parentService) {
         this.answerMapper = answerMapper;
         this.parentQuestionnaireService = parentQuestionnaireService;
         this.questionService = questionService;
         this.questionnaireService = questionnaireService;
+        this.questionOptionService = questionOptionService;
+        this.parentService = parentService;
     }
 
     @Override
@@ -58,5 +59,25 @@ public class AnswerServiceImpl implements AnswerService {
             result *= questionnaireService.updateQuestionnaire(questionnaire);
         }
         return result;
+    }
+
+    @Override
+    public HashMap<String, List<String>> queryAnswersSituationByQuestionId(Integer questionId) {
+        HashMap<String, List<String>> answersSituations = new HashMap<>();
+
+        List<QuestionOption> questionOptions = questionOptionService.queryQuestionOptionByQuestionId(questionId);
+        for (QuestionOption questionOption : questionOptions) {
+            Integer questionOptionId = questionOption.getId();
+            List<Answer> answers = answerMapper.queryAnswersByQuestionOptionId(questionOptionId);
+            //遍历answers，读取并存储选择该选项的家长
+            List<String> parentsOfOption = new ArrayList<>();
+            for (Answer answer : answers) {
+                Parent parent = parentService.queryParentById(answer.getParentId());
+                if (parent != null)
+                    parentsOfOption.add(parent.getParentName());
+            }
+            answersSituations.put(questionOption.getContent(), parentsOfOption);
+        }
+        return answersSituations;
     }
 }

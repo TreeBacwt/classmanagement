@@ -21,4 +21,9 @@
         where question_id = #{questionId}
     </select>
 
+    <select id="queryAnswersByQuestionOptionId" resultMap="answerMap">
+        select *
+        from answer
+        where question_option_id = #{questionOptionId}
+    </select>
 </mapper>

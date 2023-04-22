@@ -6,6 +6,7 @@ import com.classmanagement.service.ParentQuestionnaireService;
 import com.classmanagement.util.Result;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @CrossOrigin
@@ -45,5 +46,13 @@ public class AnswerController {
         } else {
             return Result.fail("问卷提交失败！");
         }
+    }
+
+    @GetMapping("/getAnswersSituationsByQuestionId/{qid}")
+    public Result getAnswersSituationsByQuestionId(@PathVariable("qid") Integer qid) {
+        HashMap<String, List<String>> answersSituation = answerService.queryAnswersSituationByQuestionId(qid);
+        if (!answersSituation.isEmpty()) {
+            return Result.success("题目回答情况查询成功！", answersSituation);
+        } else return Result.fail("题目回答情况查询失败！");
     }
 }
