@@ -38,4 +38,10 @@
         where id = #{id}
     </delete>
 
+    <select id="queryQuestionById" parameterType="int" resultMap="questionMap">
+        select *
+        from question
+        where id = #{id}
+    </select>
+
 </mapper>

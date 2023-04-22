@@ -3,14 +3,14 @@ package com.classmanagement.entity;
 public class Answer {
 
     private Integer questionId;
-    private String content;
+    private Integer questionOptionId;
     private Integer parentId;
 
     @Override
     public String toString() {
         return "Answer{" +
                 "questionId=" + questionId +
-                ", content='" + content + '\'' +
+                ", questionOptionId=" + questionOptionId +
                 ", parentId=" + parentId +
                 '}';
     }
@@ -23,12 +23,12 @@ public class Answer {
         this.questionId = questionId;
     }
 
-    public String getContent() {
-        return content;
+    public Integer getQuestionOptionId() {
+        return questionOptionId;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setQuestionOptionId(Integer questionOptionId) {
+        this.questionOptionId = questionOptionId;
     }
 
     public Integer getParentId() {
@@ -39,9 +39,9 @@ public class Answer {
         this.parentId = parentId;
     }
 
-    public Answer(Integer questionId, String content, Integer parentId) {
+    public Answer(Integer questionId, Integer questionOptionId, Integer parentId) {
         this.questionId = questionId;
-        this.content = content;
+        this.questionOptionId = questionOptionId;
         this.parentId = parentId;
     }
 

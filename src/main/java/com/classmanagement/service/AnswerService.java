@@ -7,6 +7,8 @@ import java.util.List;
 public interface AnswerService {
 
     Integer insertAnswer(Answer answer);
+
     List<Answer> queryAnswerByQuestionId(Integer questionId);
 
+    Integer insertAnswers(List<Answer> answers);
 }

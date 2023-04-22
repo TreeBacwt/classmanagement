@@ -99,11 +99,16 @@ public class QuestionnaireController {
         if (parentQuestionnaires.size() != 0) {
             if (questionnaires.size() != 0) {
                 for (Questionnaire questionnaire : questionnaires) {
+                    boolean flag = true;
                     for (ParentQuestionnaire parentQuestionnaire : parentQuestionnaires) {
                         //不在完成问卷列表中
-                        if (questionnaire.getId() != parentQuestionnaire.getQuestionnaireId()) {
-                            questionnaireList.add(questionnaire);
+                        if (questionnaire.getId() == parentQuestionnaire.getQuestionnaireId()) {
+                            flag = false;
+                            break;
                         }
+                    }
+                    if (flag) {
+                        questionnaireList.add(questionnaire);
                     }
                 }
                 if (questionnaireList.size() != 0) {

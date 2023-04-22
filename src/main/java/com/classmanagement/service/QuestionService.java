@@ -7,8 +7,13 @@ import java.util.List;
 public interface QuestionService {
 
     Integer insertQuestion(Question question);
+
     List<Question> queryQuestionsByQuestionnaireId(Integer questionnaireId);
+
     Integer updateQuestion(Question question);
+
     Integer deleteQuestionById(Integer id);
+
+    Question queryQuestionById(Integer id);
 
 }

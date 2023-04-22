@@ -7,12 +7,12 @@
     <resultMap id="answerMap" type="answer">
         <id column="question_id" property="questionId"/>
         <id column="parent_id" property="parentId"/>
-        <result column="content" property="content"/>
+        <result column="question_option_id" property="questionOptionId"/>
     </resultMap>
 
     <insert id="insertAnswer" parameterType="answer">
-        insert into answer (question_id, content, parent_id)
-        values (#{questionId}, #{content}, #{parentId})
+        insert into answer (question_id, question_option_id, parent_id)
+        values (#{questionId}, #{questionOptionId}, #{parentId})
     </insert>
 
     <select id="queryAnswerByQuestionId" resultMap="answerMap">

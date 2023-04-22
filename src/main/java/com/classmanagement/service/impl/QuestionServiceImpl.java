@@ -36,4 +36,9 @@ public class QuestionServiceImpl implements QuestionService {
     public Integer deleteQuestionById(Integer id) {
         return questionMapper.deleteQuestionById(id);
     }
+
+    @Override
+    public Question queryQuestionById(Integer id) {
+        return questionMapper.queryQuestionById(id);
+    }
 }

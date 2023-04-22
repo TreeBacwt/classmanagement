@@ -31,8 +31,13 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     }
 
     @Override
+    @Transactional
     public Questionnaire queryQuestionnaireById(Integer id) {
-        return questionnaireMapper.queryQuestionnaireById(id);
+        Questionnaire questionnaire = questionnaireMapper.queryQuestionnaireById(id);
+        if (questionnaireIsOver(questionnaire) == 1) {
+            return questionnaire;
+        }
+        return null;
     }
 
     @Override
@@ -46,15 +51,16 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     }
 
     @Override
+    @Transactional
     public List<Questionnaire> queryQuestionnairesLimitIn10(Integer page) {
         List<Questionnaire> questionnaires = questionnaireMapper.queryQuestionnairesLimit((page - 1) * 10, 10);
-        Date nowTime = new Date();
+        Integer result = 1;
         for (Questionnaire questionnaire : questionnaires) {
-            if (questionnaire.getOverDate().compareTo(nowTime) < 0) {
-                questionnaire.setIsOver(1);
-            }
+            result *= questionnaireIsOver(questionnaire);
         }
-        return questionnaires;
+        if (result == 1)
+            return questionnaires;
+        else return null;
     }
 
     @Transactional
@@ -88,34 +94,57 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     }
 
     @Override
+    @Transactional
     public QuestionnaireWithQuestionsAndOptionsVO queryQuestionnaireWithQuestionsAndOptionsById(Integer id) {
         Questionnaire questionnaire = questionnaireMapper.queryQuestionnaireById(id);
-        if (questionnaire != null) {
-            //查找问卷题目
-            List<Question> questions = questionMapper.queryQuestionsByQuestionnaireId(id);
-            if (questions.size() != 0) {
-                List<QuestionWithOptionsVO> questionWithOptionsVOS = new ArrayList<>();
-                for (Question question : questions) {
-                    //查找题目选项
-                    List<QuestionOption> questionOptions = questionOptionMapper.queryQuestionOptionByQuestionId(question.getId());
-                    QuestionWithOptionsVO questionWithOptionsVO = new QuestionWithOptionsVO(question, questionOptions);
-                    questionWithOptionsVOS.add(questionWithOptionsVO);
-                }
-                return new QuestionnaireWithQuestionsAndOptionsVO(questionnaire, questionWithOptionsVOS);
-            }
 
+        if (questionnaire != null) {
+            Integer questionnaireIsOver = questionnaireIsOver(questionnaire);
+            if (questionnaireIsOver == 1) {
+                //查找问卷题目
+                List<Question> questions = questionMapper.queryQuestionsByQuestionnaireId(id);
+                if (questions.size() != 0) {
+                    List<QuestionWithOptionsVO> questionWithOptionsVOS = new ArrayList<>();
+                    for (Question question : questions) {
+                        //查找题目选项
+                        List<QuestionOption> questionOptions = questionOptionMapper.queryQuestionOptionByQuestionId(question.getId());
+                        QuestionWithOptionsVO questionWithOptionsVO = new QuestionWithOptionsVO(question, questionOptions);
+                        questionWithOptionsVOS.add(questionWithOptionsVO);
+                    }
+                    return new QuestionnaireWithQuestionsAndOptionsVO(questionnaire, questionWithOptionsVOS);
+                }
+            }
         }
         return null;
     }
 
     @Override
     public List<Questionnaire> queryAllQuestionnaires() {
-        return questionnaireMapper.queryAllQuestionnaires();
+        List<Questionnaire> questionnaireList = questionnaireMapper.queryAllQuestionnaires();
+        Integer result = 1;
+        for (Questionnaire questionnaire : questionnaireList) {
+            result *= questionnaireIsOver(questionnaire);
+        }
+        if (result == 1)
+            return questionnaireList;
+        else return null;
     }
 
     @Override
     public Integer getTotal() {
+
         return questionnaireMapper.getTotal();
     }
 
+    private Integer questionnaireIsOver(Questionnaire questionnaire) {
+        if (questionnaire.getIsOver() == 0) {
+            Date nowTime = new Date();
+            if (nowTime.compareTo(questionnaire.getOverDate()) > 0) {
+                //问卷已结束
+                questionnaire.setIsOver(1);
+                return questionnaireMapper.updateQuestionnaire(questionnaire);
+            }
+        }
+        return 1;
+    }
 }
