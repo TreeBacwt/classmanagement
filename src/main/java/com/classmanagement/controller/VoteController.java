@@ -1,7 +1,10 @@
 package com.classmanagement.controller;
 
 import com.classmanagement.entity.Vote;
-import com.classmanagement.entity.VoteWithOptions;
+import com.classmanagement.entity.VoteComment;
+import com.classmanagement.entity.VoteCommentWithStudentNameVo;
+import com.classmanagement.entity.VoteWithOptionsVO;
+import com.classmanagement.service.VoteCommentService;
 import com.classmanagement.service.VoteService;
 import com.classmanagement.util.Result;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +17,11 @@ import java.util.List;
 public class VoteController {
 
     final VoteService voteService;
+    final VoteCommentService voteCommentService;
 
-    public VoteController(VoteService voteService) {
+    public VoteController(VoteService voteService, VoteCommentService voteCommentService) {
         this.voteService = voteService;
+        this.voteCommentService = voteCommentService;
     }
 
     @PostMapping("/add")
@@ -60,16 +65,32 @@ public class VoteController {
     }
 
     @PostMapping("/addVoteWithOptions")
-    public Result addVoteWithOptions(@RequestBody VoteWithOptions voteWithOptions) {
-        Integer insertVoteWithOptions = voteService.insertVoteWithOptions(voteWithOptions);
+    public Result addVoteWithOptions(@RequestBody VoteWithOptionsVO voteWithOptionsVO) {
+        Integer insertVoteWithOptions = voteService.insertVoteWithOptions(voteWithOptionsVO);
         if (insertVoteWithOptions != 0) {
             return Result.success("投票发起成功！");
         } else return Result.fail("投票发起失败！");
     }
 
     @GetMapping("/getTotal")
-    public Result getTotal(){
+    public Result getTotal() {
         Integer total = voteService.getTotal();
         return Result.success("投票总数查询成功！", total);
+    }
+
+    @GetMapping("/getVoteWithOptionsByVoteId/{vid}")
+    public Result getVoteWithOptionsByVoteId(@PathVariable("vid") Integer vid) {
+        VoteWithOptionsVO voteWithOptionsVO = voteService.queryVoteWithOptionsByVoteId(vid);
+        if (voteWithOptionsVO != null) {
+            return Result.success("投票数据查询成功！", voteWithOptionsVO);
+        } else return Result.fail("投票数据查询失败！");
+    }
+
+    @GetMapping("/getCommentsByVoteId/{vid}")
+    public Result getCommentsByVoteId(@PathVariable("vid") Integer vid) {
+        List<VoteCommentWithStudentNameVo> voteCommentWithStudentNameVos = voteCommentService.queryAllVoteCommentWithStudentNameVOsByVoteId(vid);
+        if (voteCommentWithStudentNameVos.size() != 0) {
+            return Result.success("评论区数据查询成功！", voteCommentWithStudentNameVos);
+        } else return Result.fail("评论区数据查询失败！");
     }
 }

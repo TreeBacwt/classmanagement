@@ -40,4 +40,9 @@ public class VoteOptionServiceImpl implements VoteOptionService {
     public List<VoteOption> queryVoteOptionsByVoteIdLimitIn10(Integer voteId, Integer page) {
         return voteOptionMapper.queryVoteOptionsByVoteIdLimit(voteId, (page - 1) * 10, 10);
     }
+
+    @Override
+    public List<VoteOption> queryVoteOptionsByVoteId(Integer voteId) {
+        return voteOptionMapper.queryVoteOptionsByVoteId(voteId);
+    }
 }

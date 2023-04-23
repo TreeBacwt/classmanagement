@@ -57,4 +57,12 @@ public class StudentController {
             return Result.success(message);
         } else return Result.fail("更改出错，请稍后再试！");
     }
+
+    @GetMapping("/getStudentByUserId/{uid}")
+    public Result getStudentByUserId(@PathVariable("uid") Integer uid) {
+        Student student = studentService.queryStudentByUserId(uid);
+        if (student != null) {
+            return Result.success("学生信息查询成功！", student);
+        } else return Result.fail("学生信息查询失败！");
+    }
 }

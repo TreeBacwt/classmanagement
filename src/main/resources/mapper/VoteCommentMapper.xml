@@ -23,7 +23,7 @@
           and vote_id = #{voteId}
     </delete>
 
-    <select id="queryAllVoteCommentsByVoteId" resultMap="voteComment" parameterType="int">
+    <select id="queryAllVoteCommentsByVoteId" resultMap="voteCommentMap" parameterType="int">
         select *
         from vote_comment
         where vote_id = #{vid}

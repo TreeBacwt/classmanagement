@@ -44,4 +44,10 @@
         limit #{start}, #{limit}
     </select>
 
+    <select id="queryVoteOptionsByVoteId" resultMap="voteOptionMap">
+        select *
+        from vote_option
+        where vote_id = #{voteId}
+    </select>
+
 </mapper>

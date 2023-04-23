@@ -1,10 +1,9 @@
 package com.classmanagement.service.impl;
 
+import com.classmanagement.dao.VoteCommentMapper;
 import com.classmanagement.dao.VoteMapper;
 import com.classmanagement.dao.VoteOptionMapper;
-import com.classmanagement.entity.Vote;
-import com.classmanagement.entity.VoteOption;
-import com.classmanagement.entity.VoteWithOptions;
+import com.classmanagement.entity.*;
 import com.classmanagement.service.VoteService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +16,12 @@ public class VoteServiceImpl implements VoteService {
 
     final VoteMapper voteMapper;
     final VoteOptionMapper voteOptionMapper;
+    final VoteCommentMapper voteCommentMapper;
 
-    public VoteServiceImpl(VoteMapper voteMapper, VoteOptionMapper voteOptionMapper) {
+    public VoteServiceImpl(VoteMapper voteMapper, VoteOptionMapper voteOptionMapper, VoteCommentMapper voteCommentMapper) {
         this.voteMapper = voteMapper;
         this.voteOptionMapper = voteOptionMapper;
+        this.voteCommentMapper = voteCommentMapper;
     }
 
     @Override
@@ -63,12 +64,12 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     @Transactional
-    public Integer insertVoteWithOptions(VoteWithOptions voteWithOptions) {
-        Vote vote = voteWithOptions.getVote();
+    public Integer insertVoteWithOptions(VoteWithOptionsVO voteWithOptionsVO) {
+        Vote vote = voteWithOptionsVO.getVote();
         Integer insertVote = voteMapper.insertVote(vote);
         if (insertVote != 0) {
             Integer voteId = vote.getId();
-            List<VoteOption> options = voteWithOptions.getOptions();
+            List<VoteOption> options = voteWithOptionsVO.getOptions();
             int result = 1;
             for (VoteOption voteOption : options) {
                 voteOption.setVoteId(voteId);
@@ -81,6 +82,21 @@ public class VoteServiceImpl implements VoteService {
     @Override
     public Integer getTotal() {
         return voteMapper.getTotal();
+    }
+
+    @Override
+    @Transactional
+    public VoteWithOptionsVO queryVoteWithOptionsByVoteId(Integer vid) {
+        Vote vote = voteMapper.queryVoteById(vid);
+        if (vote != null) {
+            if (voteIsOver(vote) != 0) {
+                List<VoteOption> voteOptions = voteOptionMapper.queryVoteOptionsByVoteId(vid);
+                if (voteOptions.size() != 0) {
+                    return new VoteWithOptionsVO(vote, voteOptions);
+                }
+            }
+        }
+        return null;
     }
 
     private Integer voteIsOver(Vote vote) {

@@ -1,7 +1,7 @@
 package com.classmanagement.service;
 
 import com.classmanagement.entity.Vote;
-import com.classmanagement.entity.VoteWithOptions;
+import com.classmanagement.entity.VoteWithOptionsVO;
 
 import java.util.List;
 
@@ -17,8 +17,10 @@ public interface VoteService {
 
     List<Vote> queryVotesLimitIn10(Integer page);
 
-    Integer insertVoteWithOptions(VoteWithOptions voteWithOptions);
+    Integer insertVoteWithOptions(VoteWithOptionsVO voteWithOptionsVO);
 
     Integer getTotal();
+
+    VoteWithOptionsVO queryVoteWithOptionsByVoteId(Integer vid);
 
 }

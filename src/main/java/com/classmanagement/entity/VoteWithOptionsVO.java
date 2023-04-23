@@ -2,19 +2,19 @@ package com.classmanagement.entity;
 
 import java.util.List;
 
-public class VoteWithOptions {
+public class VoteWithOptionsVO {
 
     private Vote vote;
     private List<VoteOption> options;
 
-    public VoteWithOptions(Vote vote, List<VoteOption> options) {
+    public VoteWithOptionsVO(Vote vote, List<VoteOption> options) {
         this.vote = vote;
         this.options = options;
     }
 
     @Override
     public String toString() {
-        return "VoteWithOptions{" +
+        return "VoteWithOptionsVO{" +
                 "vote=" + vote +
                 ", options=" + options +
                 '}';
@@ -36,6 +36,6 @@ public class VoteWithOptions {
         this.options = options;
     }
 
-    public VoteWithOptions() {
+    public VoteWithOptionsVO() {
     }
 }
