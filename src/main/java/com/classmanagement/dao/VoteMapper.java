@@ -9,9 +9,15 @@ import java.util.List;
 public interface VoteMapper {
 
     Integer insertVote(Vote vote);
+
     Vote queryVoteById(Integer id);
+
     Integer updateVote(Vote vote);
+
     Integer deleteVoteById(Integer id);
+
     List<Vote> queryVotesLimit(Integer start, Integer limit);
+
+    Integer getTotal();
 
 }

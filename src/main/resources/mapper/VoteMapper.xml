@@ -49,4 +49,8 @@
         from vote limit #{start}, #{limit}
     </select>
 
+    <select id="getTotal" resultType="int">
+        select count(*)
+        from vote
+    </select>
 </mapper>

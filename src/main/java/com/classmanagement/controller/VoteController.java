@@ -67,4 +67,9 @@ public class VoteController {
         } else return Result.fail("投票发起失败！");
     }
 
+    @GetMapping("/getTotal")
+    public Result getTotal(){
+        Integer total = voteService.getTotal();
+        return Result.success("投票总数查询成功！", total);
+    }
 }

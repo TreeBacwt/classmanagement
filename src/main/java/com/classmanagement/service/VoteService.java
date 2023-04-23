@@ -19,4 +19,6 @@ public interface VoteService {
 
     Integer insertVoteWithOptions(VoteWithOptions voteWithOptions);
 
+    Integer getTotal();
+
 }

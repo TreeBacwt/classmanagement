@@ -9,6 +9,7 @@ import com.classmanagement.service.VoteService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,8 +29,13 @@ public class VoteServiceImpl implements VoteService {
     }
 
     @Override
+    @Transactional
     public Vote queryVoteById(Integer id) {
-        return voteMapper.queryVoteById(id);
+        Vote vote = voteMapper.queryVoteById(id);
+        Integer voteIsOver = voteIsOver(vote);
+        if (voteIsOver != 0) {
+            return vote;
+        } else return null;
     }
 
     @Override
@@ -43,8 +49,16 @@ public class VoteServiceImpl implements VoteService {
     }
 
     @Override
+    @Transactional
     public List<Vote> queryVotesLimitIn10(Integer page) {
-        return voteMapper.queryVotesLimit((page - 1) * 10, 10);
+        List<Vote> votes = voteMapper.queryVotesLimit((page - 1) * 10, 10);
+        int result = 1;
+        for (Vote vote : votes) {
+            result *= voteIsOver(vote);
+        }
+        if (result == 1)
+            return votes;
+        else return null;
     }
 
     @Override
@@ -62,5 +76,21 @@ public class VoteServiceImpl implements VoteService {
             }
             return result;
         } else return 0;
+    }
+
+    @Override
+    public Integer getTotal() {
+        return voteMapper.getTotal();
+    }
+
+    private Integer voteIsOver(Vote vote) {
+        if (vote.getIsOver() == 0) {
+            Date nowTime = new Date();
+            if (nowTime.compareTo(vote.getOverDate()) > 0) {
+                vote.setIsOver(1);
+                return voteMapper.updateVote(vote);
+            }
+        }
+        return 1;
     }
 }
