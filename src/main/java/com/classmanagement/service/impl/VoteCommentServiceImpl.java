@@ -50,7 +50,14 @@ public class VoteCommentServiceImpl implements VoteCommentService {
             if (student != null) {
                 voteCommentWithStudentNameVo.setStudentName(student.getStudentName());
             } else voteCommentWithStudentNameVo.setStudentName("账户已注销");
+
+            voteCommentWithStudentNameVos.add(voteCommentWithStudentNameVo);
         }
         return voteCommentWithStudentNameVos;
+    }
+
+    @Override
+    public Integer deleteVoteCommentById(Integer id) {
+        return voteCommentMapper.deleteVoteCommentById(id);
     }
 }

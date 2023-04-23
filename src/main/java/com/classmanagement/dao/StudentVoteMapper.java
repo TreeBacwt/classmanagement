@@ -9,6 +9,12 @@ import java.util.List;
 public interface StudentVoteMapper {
 
     Integer insertStudentVote(StudentVote studentVote);
+
     List<StudentVote> queryStudentVotesByVoteOptionId(Integer voteOptionId);
+
     Integer deleteStudentVoteByStudentNumAndVoteOptionId(Integer studentNum, Integer voteOptionId);
+
+    List<StudentVote> queryStudentVotesByStudentNum(Integer studentNum);
+
+    Integer deleteStudentVoteByVoteOptionId(Integer voteOptionId);
 }

@@ -1,14 +1,13 @@
 package com.classmanagement.controller;
 
-import com.classmanagement.entity.Vote;
-import com.classmanagement.entity.VoteComment;
-import com.classmanagement.entity.VoteCommentWithStudentNameVo;
-import com.classmanagement.entity.VoteWithOptionsVO;
+import com.classmanagement.entity.*;
+import com.classmanagement.service.StudentVoteService;
 import com.classmanagement.service.VoteCommentService;
 import com.classmanagement.service.VoteService;
 import com.classmanagement.util.Result;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @CrossOrigin
@@ -18,10 +17,12 @@ public class VoteController {
 
     final VoteService voteService;
     final VoteCommentService voteCommentService;
+    final StudentVoteService studentVoteService;
 
-    public VoteController(VoteService voteService, VoteCommentService voteCommentService) {
+    public VoteController(VoteService voteService, VoteCommentService voteCommentService, StudentVoteService studentVoteService) {
         this.voteService = voteService;
         this.voteCommentService = voteCommentService;
+        this.studentVoteService = studentVoteService;
     }
 
     @PostMapping("/add")
@@ -92,5 +93,45 @@ public class VoteController {
         if (voteCommentWithStudentNameVos.size() != 0) {
             return Result.success("评论区数据查询成功！", voteCommentWithStudentNameVos);
         } else return Result.fail("评论区数据查询失败！");
+    }
+
+    @PostMapping("/addMultiStudentVotes")
+    public Result addMultiStudentVotes(@RequestBody List<StudentVote> studentVotes) {
+        Integer insertStudentVotes = studentVoteService.insertStudentVotes(studentVotes);
+        if (insertStudentVotes != 0) {
+            return Result.success("投票成功！");
+        } else return Result.fail("投票失败！");
+    }
+
+    @GetMapping("/queryIsStudentVoted/{num}/{vid}")
+    public Result queryIsStudentVoted(@PathVariable("num") Integer studentNum, @PathVariable("vid") Integer vid) {
+        Integer queryIsStudentVotedByStudentNum = studentVoteService.QueryIsStudentVotedByStudentNum(studentNum, vid);
+        if (queryIsStudentVotedByStudentNum == 1) {
+            return Result.success("已参与投票！", 1);
+        } else return Result.success("尚未参与投票！", 0);
+    }
+
+    @GetMapping("/queryOptionsPercentageByVoteId/{vid}")
+    public Result queryOptionsPercentageByVoteId(@PathVariable("vid") Integer vid) {
+        HashMap<String, Float> stringFloatHashMap = voteService.queryStudentVotePercentageByVoteId(vid);
+        if (stringFloatHashMap != null) {
+            return Result.success("投票情况查询成功！", stringFloatHashMap);
+        } else return Result.fail("投票情况查询失败！");
+    }
+
+    @PostMapping("/addComment")
+    public Result addComment(VoteComment voteComment) {
+        Integer insertVoteComment = voteCommentService.insertVoteComment(voteComment);
+        if (insertVoteComment != 0) {
+            return Result.success("评论成功！");
+        } else return Result.fail("评论失败！");
+    }
+
+    @DeleteMapping("/deleteComment")
+    public Result deleteComment(Integer id) {
+        Integer deleteVoteCommentById = voteCommentService.deleteVoteCommentById(id);
+        if (deleteVoteCommentById != 0) {
+            return Result.success("删除评论成功！");
+        } else return Result.fail("删除评论失败！");
     }
 }

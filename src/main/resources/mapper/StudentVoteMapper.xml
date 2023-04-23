@@ -23,7 +23,20 @@
     <delete id="deleteStudentVoteByStudentNumAndVoteOptionId">
         delete
         from student_vote
-        where student_num = #{studentNum} and vote_option_id = #{voteOptionId}
+        where student_num = #{studentNum}
+          and vote_option_id = #{voteOptionId}
+    </delete>
+
+    <select id="queryStudentVotesByStudentNum" resultMap="studentVoteMap">
+        select *
+        from student_vote
+        where student_num = #{studentNum}
+    </select>
+
+    <delete id="deleteStudentVoteByVoteOptionId">
+        delete
+        from student_vote
+        where vote_option_id = #{voteOptionId}
     </delete>
 
 </mapper>

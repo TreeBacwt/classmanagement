@@ -3,6 +3,7 @@ package com.classmanagement.service;
 import com.classmanagement.entity.Vote;
 import com.classmanagement.entity.VoteWithOptionsVO;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface VoteService {
@@ -22,5 +23,8 @@ public interface VoteService {
     Integer getTotal();
 
     VoteWithOptionsVO queryVoteWithOptionsByVoteId(Integer vid);
+
+    HashMap<String, Float> queryStudentVotePercentageByVoteId(Integer voteId);
+
 
 }

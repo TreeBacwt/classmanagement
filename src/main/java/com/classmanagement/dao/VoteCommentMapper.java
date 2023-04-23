@@ -13,4 +13,8 @@ public interface VoteCommentMapper {
     Integer deleteVoteCommentByStudentNumAndVoteId(Integer studentNum, Integer voteId);
 
     List<VoteComment> queryAllVoteCommentsByVoteId(Integer vid);
+
+    Integer deleteVoteCommentById(Integer id);
+
+    Integer deleteVoteCommentByVoteId(Integer vid);
 }

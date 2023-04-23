@@ -1,5 +1,6 @@
 package com.classmanagement.service.impl;
 
+import com.classmanagement.dao.StudentVoteMapper;
 import com.classmanagement.dao.VoteCommentMapper;
 import com.classmanagement.dao.VoteMapper;
 import com.classmanagement.dao.VoteOptionMapper;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -17,11 +19,13 @@ public class VoteServiceImpl implements VoteService {
     final VoteMapper voteMapper;
     final VoteOptionMapper voteOptionMapper;
     final VoteCommentMapper voteCommentMapper;
+    final StudentVoteMapper studentVoteMapper;
 
-    public VoteServiceImpl(VoteMapper voteMapper, VoteOptionMapper voteOptionMapper, VoteCommentMapper voteCommentMapper) {
+    public VoteServiceImpl(VoteMapper voteMapper, VoteOptionMapper voteOptionMapper, VoteCommentMapper voteCommentMapper, StudentVoteMapper studentVoteMapper) {
         this.voteMapper = voteMapper;
         this.voteOptionMapper = voteOptionMapper;
         this.voteCommentMapper = voteCommentMapper;
+        this.studentVoteMapper = studentVoteMapper;
     }
 
     @Override
@@ -45,8 +49,18 @@ public class VoteServiceImpl implements VoteService {
     }
 
     @Override
+    @Transactional
     public Integer deleteVoteById(Integer id) {
-        return voteMapper.deleteVoteById(id);
+        int result = 1;
+        result *= voteMapper.deleteVoteById(id);
+        List<VoteOption> voteOptions = voteOptionMapper.queryVoteOptionsByVoteId(id);
+        for (VoteOption voteOption : voteOptions) {
+            Integer voteOptionId = voteOption.getId();
+            studentVoteMapper.deleteStudentVoteByVoteOptionId(voteOptionId);
+            voteOptionMapper.deleteVoteOptionById(voteOptionId);
+        }
+        voteCommentMapper.deleteVoteCommentByVoteId(id);
+        return result;
     }
 
     @Override
@@ -95,6 +109,36 @@ public class VoteServiceImpl implements VoteService {
                     return new VoteWithOptionsVO(vote, voteOptions);
                 }
             }
+        }
+        return null;
+    }
+
+    @Override
+    public HashMap<String, Float> queryStudentVotePercentageByVoteId(Integer voteId) {
+        Vote vote = voteMapper.queryVoteById(voteId);
+        List<VoteOption> voteOptions = voteOptionMapper.queryVoteOptionsByVoteId(voteId);
+        HashMap<String, Float> votePercentage = new HashMap<>();
+        if (voteOptions.size() != 0) {
+            float amount = 0;
+            for (VoteOption voteOption : voteOptions) {
+                int size = studentVoteMapper.queryStudentVotesByVoteOptionId(voteOption.getId()).size();
+                amount += size;
+            }
+            if (amount != 0) {
+                for (VoteOption voteOption : voteOptions) {
+                    Integer optionVotedINT = studentVoteMapper.queryStudentVotesByVoteOptionId(voteOption.getId()).size();
+                    float optionCount = optionVotedINT.floatValue();
+                    votePercentage.put(voteOption.getContent(), optionCount / amount * 100);
+                }
+            } else {
+                for (VoteOption voteOption : voteOptions) {
+                    Integer optionVotedINT = studentVoteMapper.queryStudentVotesByVoteOptionId(voteOption.getId()).size();
+                    float optionCount = optionVotedINT.floatValue();
+                    votePercentage.put(voteOption.getContent(), (float) 0);
+                }
+            }
+
+            return votePercentage;
         }
         return null;
     }

@@ -14,4 +14,6 @@ public interface VoteCommentService {
     List<VoteComment> queryAllVoteCommentsByVoteId(Integer vid);
 
     List<VoteCommentWithStudentNameVo> queryAllVoteCommentWithStudentNameVOsByVoteId(Integer vid);
+
+    Integer deleteVoteCommentById(Integer id);
 }

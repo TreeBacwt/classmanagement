@@ -5,13 +5,14 @@
 <mapper namespace="com.classmanagement.dao.VoteCommentMapper">
 
     <resultMap id="voteCommentMap" type="voteComment">
+        <id column="id" property="id"/>
         <result column="student_num" property="studentNum"/>
         <result column="vote_id" property="voteId"/>
         <result column="comment" property="comment"/>
         <result column="comment_date" property="commentDate"/>
     </resultMap>
 
-    <insert id="insertVoteComment" parameterType="voteComment">
+    <insert id="insertVoteComment" parameterType="voteComment" useGeneratedKeys="true" keyProperty="id">
         insert into vote_comment (student_num, vote_id, comment, comment_date)
         values (#{studentNum}, #{voteId}, #{comment}, #{commentDate})
     </insert>
@@ -27,5 +28,18 @@
         select *
         from vote_comment
         where vote_id = #{vid}
+        order by comment_date desc
     </select>
+
+    <delete id="deleteVoteCommentById" parameterType="int">
+        delete
+        from vote_comment
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteVoteCommentByVoteId">
+        delete
+        from vote_comment
+        where vote_id = #{vid}
+    </delete>
 </mapper>

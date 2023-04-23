@@ -8,12 +8,14 @@ public class VoteComment {
     private Integer voteId;
     private String comment;
     private Date commentDate;
+    private Integer id;
 
-    public VoteComment(Integer studentNum, Integer voteId, String comment, Date commentDate) {
+    public VoteComment(Integer studentNum, Integer voteId, String comment, Date commentDate, Integer id) {
         this.studentNum = studentNum;
         this.voteId = voteId;
         this.comment = comment;
         this.commentDate = commentDate;
+        this.id = id;
     }
 
     @Override
@@ -23,7 +25,23 @@ public class VoteComment {
                 ", voteId=" + voteId +
                 ", comment='" + comment + '\'' +
                 ", commentDate=" + commentDate +
+                ", id=" + id +
                 '}';
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public VoteComment(Integer studentNum, Integer voteId, String comment, Date commentDate) {
+        this.studentNum = studentNum;
+        this.voteId = voteId;
+        this.comment = comment;
+        this.commentDate = commentDate;
     }
 
     public Date getCommentDate() {
