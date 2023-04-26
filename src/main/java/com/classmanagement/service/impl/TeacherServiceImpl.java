@@ -7,6 +7,7 @@ import com.classmanagement.entity.User;
 import com.classmanagement.service.TeacherService;
 import com.classmanagement.util.Md5Util;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
@@ -22,6 +23,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    @Transactional
     public Integer addTeacher(User user, Teacher teacher) {
         Md5Util.md5(user);
         userMapper.insertUser(user);

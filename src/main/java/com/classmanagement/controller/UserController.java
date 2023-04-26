@@ -1,11 +1,9 @@
 package com.classmanagement.controller;
 
-import com.classmanagement.entity.Parent;
-import com.classmanagement.entity.Student;
-import com.classmanagement.entity.User;
-import com.classmanagement.entity.UserWithNameVO;
+import com.classmanagement.entity.*;
 import com.classmanagement.service.ParentService;
 import com.classmanagement.service.StudentService;
+import com.classmanagement.service.TeacherService;
 import com.classmanagement.service.UserService;
 import com.classmanagement.util.Md5Util;
 import com.classmanagement.util.Result;
@@ -27,13 +25,15 @@ public class UserController {
     StudentService studentService;
     final
     ParentService parentService;
+    final TeacherService teacherService;
 
     static Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    public UserController(UserService userService, StudentService studentService, ParentService parentService) {
+    public UserController(UserService userService, StudentService studentService, ParentService parentService, TeacherService teacherService) {
         this.userService = userService;
         this.studentService = studentService;
         this.parentService = parentService;
+        this.teacherService = teacherService;
     }
 
     /*处理账户名重复异常*/
@@ -76,6 +76,16 @@ public class UserController {
         if (addParent != 0) {
             return Result.success("家长账户添加成功！");
         } else return Result.fail("添加出错，请稍后再试！");
+    }
+
+    /*注册教师账号*/
+    @PostMapping("/register/teacher")
+    public Result registerTeacher(Teacher teacher, @RequestParam("account") String account, @RequestParam("password") String password) {
+        User user = new User(account, password, 1);
+        Integer addTeacher = teacherService.addTeacher(user, teacher);
+        if (addTeacher != 0) {
+            return Result.success("教师账号注册成功！");
+        } else return Result.fail("教师账号注册失败！");
     }
 
     @PutMapping("/upd/psw")
