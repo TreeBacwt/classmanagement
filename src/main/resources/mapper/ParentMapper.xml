@@ -26,7 +26,6 @@
     <update id="updateParent" parameterType="parent">
         update parent
         set parent_name = #{parentName},
-            student_num = #{studentNum},
             information = #{information}
         where id = #{id}
     </update>
