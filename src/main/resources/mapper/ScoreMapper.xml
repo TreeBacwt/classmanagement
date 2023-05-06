@@ -68,4 +68,11 @@
           and student_num = #{studentNum}
     </select>
 
+    <select id="queryScoreBySubjectIdAndStudentNum" resultMap="scoreMap">
+        select *
+        from score
+        where subject_id = #{subjectId}
+          and student_num = #{studentNum}
+    </select>
+
 </mapper>

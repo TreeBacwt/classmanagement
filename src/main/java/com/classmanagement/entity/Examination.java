@@ -2,7 +2,7 @@ package com.classmanagement.entity;
 
 import java.util.Date;
 
-public class Examination {
+public class Examination implements Comparable<Examination> {
 
     private Integer id;
     private String examinationName;
@@ -53,5 +53,10 @@ public class Examination {
 
     public void setExaminationDate(Date examinationDate) {
         this.examinationDate = examinationDate;
+    }
+
+    @Override
+    public int compareTo(Examination o) {
+        return this.getExaminationDate().after(o.getExaminationDate()) ? 1 : 0;
     }
 }

@@ -25,4 +25,6 @@ public interface ScoreMapper {
 
     Score queryScoreBySubjectIdAndExaminationIdAndStudentNum(Integer subjectId, Integer examinationId, Integer studentNum);
 
+    List<Score> queryScoreBySubjectIdAndStudentNum(Integer studentNum, Integer subjectId);
+
 }

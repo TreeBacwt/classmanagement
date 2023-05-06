@@ -5,10 +5,13 @@ import com.classmanagement.dao.ScoreMapper;
 import com.classmanagement.entity.Examination;
 import com.classmanagement.entity.ExaminationWithScoresVO;
 import com.classmanagement.entity.Score;
+import com.classmanagement.entity.SubjectScoresWithExaminationNameVO;
 import com.classmanagement.service.ExaminationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -67,5 +70,30 @@ public class ExaminationServiceImpl implements ExaminationService {
             if (insertScores != 0) return 1;
         }
         return 0;
+    }
+
+    @Override
+    public List<SubjectScoresWithExaminationNameVO> querySubjectScoresWithExaminationNameVosByStudentNumAndSubjectId(Integer studentNum, Integer subjectId) {
+        List<Score> scores = scoreMapper.queryScoreBySubjectIdAndStudentNum(studentNum, subjectId);
+        ArrayList<Examination> examinations = new ArrayList<>();
+        for (Score score : scores) {
+            Examination examination = examinationMapper.queryExaminationById(score.getExaminationId());
+            if (examination != null) {
+                examinations.add(examination);
+            }
+        }
+        if (!examinations.isEmpty()) {
+            Collections.sort(examinations);
+        } else return null;
+
+        ArrayList<SubjectScoresWithExaminationNameVO> subjectScoresWithExaminationNameVOS = new ArrayList<>();
+        for (Examination examination : examinations) {
+            Float score = scoreMapper.queryScoreBySubjectIdAndExaminationIdAndStudentNum(subjectId, examination.getId(), studentNum).getScore();
+            subjectScoresWithExaminationNameVOS.add(new SubjectScoresWithExaminationNameVO(score, examination.getExaminationName()));
+        }
+
+        if (subjectScoresWithExaminationNameVOS.isEmpty()) {
+            return null;
+        } else return subjectScoresWithExaminationNameVOS;
     }
 }

@@ -2,6 +2,7 @@ package com.classmanagement.controller;
 
 import com.classmanagement.entity.Examination;
 import com.classmanagement.entity.ExaminationWithScoresVO;
+import com.classmanagement.entity.SubjectScoresWithExaminationNameVO;
 import com.classmanagement.service.ExaminationService;
 import com.classmanagement.service.ScoreService;
 import com.classmanagement.util.Result;
@@ -76,5 +77,13 @@ public class ExaminationController {
         if (addExaminationWithScores == 1) {
             return Result.success("考试成绩录入成功！", examination.getExamination().getId());
         } else return Result.fail("出错了，请稍后再试！");
+    }
+
+    @GetMapping("/getSubjectScores/{studentNum}/{subjectId}")
+    public Result getSubjectScores(@PathVariable("studentNum") Integer studentNum, @PathVariable("subjectId") Integer subjectId) {
+        List<SubjectScoresWithExaminationNameVO> subjectScoresWithExaminationNameVOS = examinationService.querySubjectScoresWithExaminationNameVosByStudentNumAndSubjectId(studentNum, subjectId);
+        if (subjectScoresWithExaminationNameVOS != null) {
+            return Result.success("查询成功！", subjectScoresWithExaminationNameVOS);
+        } else return Result.fail("查询失败！");
     }
 }

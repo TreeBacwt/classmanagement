@@ -38,6 +38,7 @@
     <select id="queryExaminationLimit" resultMap="examinationMap">
         select *
         from examination
+        order by examination_date asc
         limit #{start}, #{limit}
     </select>
 
